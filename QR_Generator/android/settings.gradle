@@ -1,0 +1,3 @@
+rootProject.name = 'QR_Generator'
+
+include ':app'
