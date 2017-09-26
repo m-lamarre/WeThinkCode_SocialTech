@@ -4,15 +4,20 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
   View
-} from 'react-native';
+} from 'react-native';*/
 
-export default class QR_Generator extends Component {
+import { AppRegistry } from 'react-native';
+import App  from './app/index';
+
+AppRegistry.registerComponent('QR_Generator', () => App);
+
+/*export default class QR_Generator extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -48,6 +53,4 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-});
-
-AppRegistry.registerComponent('QR_Generator', () => QR_Generator);
+});*/

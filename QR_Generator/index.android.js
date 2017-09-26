@@ -4,7 +4,12 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import { AppRegistry } from 'react-native';
+import App  from './app/index';
+
+AppRegistry.registerComponent('QR_Generator', () => App);
+
+/*import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -50,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('QR_Generator', () => QR_Generator);
+AppRegistry.registerComponent('QR_Generator', () => QR_Generator);*/
