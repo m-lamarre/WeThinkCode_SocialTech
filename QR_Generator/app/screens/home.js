@@ -1,52 +1,57 @@
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
   View,
   Button
-} from 'react-native';
+} from 'react-native';*/
+import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, View } from 'native-base';
+import {
+  Actions
+} from 'react-native-router-flux';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F5FCFF'
+  },
+  btn_style: {
+    margin: 5
+  }
+});
 
 export default class Home extends Component {
-    onButtonPress() {
-        
-    };
-
     render() {
       return (
-        <View style={styles.container}>
-          <Text style={styles.welcome}>
-            Welcome to QR-Generator!
-          </Text>
-          <View>
-            <Button 
-                onPress={this.onButtonPress}
-                title="Generate QR Code" 
-                accessibilityLabel="Generate QR codes for Paramedics to access your information."/>
-            <Button 
-                onPress={this.onButtonPress}
-                title="Show QR Code" 
-                accessibilityLabel="Show your current QR Code."/>
-          </View>
-          <Text style={styles.instructions}>
-            Press Cmd+R to reload,{'\n'}
-            Cmd+D or shake for dev menu
-          </Text>
-        </View>
+        <Container>
+          <Header>
+            <Left/>
+            <Body>
+              <Title>QR Generator</Title>
+            </Body>
+            <Right />
+          </Header>
+          <Content>
+            <View style={styles.container}>
+              <Button 
+                full 
+                onPress={() => { Actions.qrCreate(); }}
+                style={styles.btn_style}
+              >
+                <Text>Create QR Code</Text>
+              </Button>
+              <Button 
+                full
+                style={styles.btn_style}
+              >
+                <Text>Show QR Code</Text>
+              </Button>
+            </View>
+          </Content>
+        </Container>
       );
     }
-  }
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#F5FCFF',
-    },
-    welcome: {
-      fontSize: 20,
-      textAlign: 'center',
-      margin: 10,
-    }
-  });
+  };
