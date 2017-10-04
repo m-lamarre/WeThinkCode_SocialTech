@@ -14,6 +14,8 @@ import Home from './screens/home';
 import Disclaimer from './screens/disclaimer';
 
 import PersonalDetails from './screens/personalDetails';
+import NextOfKin from './screens/nextOfKin';
+import MedicalDetails from './screens/medicalDetails';
 
 const reducerCreate = params => {
 	const defaultReducer = new Reducer(params);
@@ -28,13 +30,14 @@ const QR_Generator = (props) => {
 		<Router>
 			<Overlay>
 				<Modal hideNavBar transitionConfig={() => ({ screenInterpolator: CardStackStyleInterpolator.forFadeFromBottomAndroid })}>
-					<Lightbox>
+					
 					<Stack hideNavBar key="root">
 						<Scene key="Home" component={Home}/>
 						<Scene key="Disclaimer" component={Disclaimer}/>
 						<Scene key="PersonalDetails" component={PersonalDetails} />
+						<Scene key="NextOfKin" component={NextOfKin} />
+						<Scene key="MedicalDetails" component={MedicalDetails} />
 					</Stack>
-					</Lightbox>
 				</Modal>
 			</Overlay>
 		</Router>
