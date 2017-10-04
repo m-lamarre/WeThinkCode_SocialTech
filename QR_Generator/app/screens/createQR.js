@@ -93,7 +93,7 @@ export default class CreateQR extends Component {
     }
 
     getDate(date) {
-        return (date.getFullYear() + "-" + (date.getMonth() - 1) + "-" + date.getDate());
+        return (date.getFullYear() + "-" + (date.getMonth()) + "-" + date.getDate());
     }
     
     buildToken() {
@@ -106,6 +106,17 @@ export default class CreateQR extends Component {
         token += "|" + this.getGender(this.state.patient.gender);
         token += "|" + this.getRace(this.state.patient.race);
         token += "|" + this.getBloodType(this.state.patient.bloodType);
+
+        token += "|" + this.state.patient.nextOfKinFirstName;
+        token += "|" + this.state.patient.nextOfKinLastName;
+        token += "|" + this.state.patient.nextOfKinCellNumber;
+
+        token += "|" + this.state.patient.medicalAid;
+        token += "|" + this.state.patient.medicalAidNumber;
+
+        token += "|" + this.state.patient.allergies;
+        token += "|" + this.state.patient.history;
+        token += "|" + this.state.patient.chronicMedication;
 
         console.log("TOKEN: " + token);
         return (token);
