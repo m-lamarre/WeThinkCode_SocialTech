@@ -5,8 +5,7 @@ import {
 	Stack,
 	Scene,
 	Overlay,
-	Modal,
-	Lightbox
+	Modal
 } from 'react-native-router-flux';
 import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
 
@@ -16,14 +15,7 @@ import Disclaimer from './screens/disclaimer';
 import PersonalDetails from './screens/personalDetails';
 import NextOfKin from './screens/nextOfKin';
 import MedicalDetails from './screens/medicalDetails';
-
-const reducerCreate = params => {
-	const defaultReducer = new Reducer(params);
-	return (state, action) => {
-		//console.log('ACTION:', action);
-		return defaultReducer(state, action);
-	};
-};
+import CreateQR from './screens/createQR';
 
 const QR_Generator = (props) => {
 	return (
@@ -37,6 +29,7 @@ const QR_Generator = (props) => {
 						<Scene key="PersonalDetails" component={PersonalDetails} />
 						<Scene key="NextOfKin" component={NextOfKin} />
 						<Scene key="MedicalDetails" component={MedicalDetails} />
+						<Scene key="CreateQR" component={CreateQR} />
 					</Stack>
 				</Modal>
 			</Overlay>

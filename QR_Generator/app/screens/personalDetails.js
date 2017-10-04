@@ -108,15 +108,18 @@ export default class PersonalDetails extends Component {
 							onSelectedChanged={(value) => { this.state.patient.initial = value; }}/>
 						<DropDown title="Select Gender" list={["Male", "Female"]} 
 							onSelectedChanged={(value) => { this.state.patient.gender = value; }}/>
-						<DropDown title="Select Race" list={["White", "Black", "Indian", "Coloured"]}
+							
+						<DropDown title="Select Race" 
+							list={["White", "Black", "Indian", "Coloured"]}
 							onSelectedChanged={(value) => { this.state.patient.race = value; }}/>
-						<DropDown title="Select Bloodtype" list={["Not Sure", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]} 
+						<DropDown title="Select Bloodtype" 
+							list={["Not Sure", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]} 
 							onSelectedChanged={(value) => { this.state.patient.bloodType = value; }}/>
 					</Form>
 			  	</Content>
 				<Footer>
 					<Button transparent onPress={() => { Actions.NextOfKin(this.state); }}>
-						<Text>Finish</Text>
+						<Text>Next</Text>
 					</Button>
 				</Footer>
 			</Container>

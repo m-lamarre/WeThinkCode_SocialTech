@@ -9,11 +9,6 @@ import {
 	Picker, InputGroup
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import DatePicker from 'react-native-datepicker'
-
-import PatientInformation from '../models/PatientInformation';
-
-import DropDown from '../components/DropDown/dropdown'
 
 const styles = StyleSheet.create({
 	btn_container: {
@@ -51,8 +46,7 @@ export default class MedicalDetails extends Component {
 						</Button>
 					</Left>
 					<Body>
-						<Title>Next of Kin
-                        </Title>
+						<Title>Medical Details</Title>
 					</Body>
 				</Header>
 				<Content>
@@ -75,24 +69,36 @@ export default class MedicalDetails extends Component {
                             <Input style={{
                                 marginTop: 5,
                                 width: 200, height: 200
-                            }}  multiline={true} placeholder='Type your allergies here'/>
+                            }}  multiline={true} placeholder='Type your allergies here'
+                            maxLength={850}
+                            onChangeText={(value) => {
+                                this.state.patient.allergies = value;
+                            }}/>
                         </InputGroup>                        
 						<InputGroup borderType='regular'>
                             <Input style={{
                                 marginTop: 5,
                                 width: 200, height: 200
-                            }}  multiline={true} placeholder='Type your medical history here'/>
+                            }}  multiline={true} placeholder='Type your medical history here'
+                            maxLength={850}
+                            onChangeText={(value) => {
+									this.state.patient.history = value;
+                            }}/>
                         </InputGroup>                        
 						<InputGroup borderType='regular'>
                             <Input style={{
                                 marginTop: 5,
                                 width: 200, height: 200
-                            }}  multiline={true} placeholder='Type any chronic medication here'/>
+                            }}  multiline={true} placeholder='Type any chronic medication here'
+                            maxLength={800}
+                            onChangeText={(value) => {
+                                this.state.patient.chronicMedication = value;
+                            }}/>
                         </InputGroup>                     
 					</Form>
 			  	</Content>
 				<Footer>
-					<Button transparent>
+					<Button transparent onPress={() => { Actions.CreateQR(this.state); }}>
 						<Text>Finish</Text>
 					</Button>
 				</Footer>

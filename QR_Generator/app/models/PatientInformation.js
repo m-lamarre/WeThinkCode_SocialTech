@@ -16,9 +16,9 @@ function PatientInformation() {
     this.medicalAid = null;
     this.medicalAidNumber = null;
 
-    this.allergies = {};
-    this.history = {};
-    this.chronicMedication = {};
+    this.allergies = null;
+    this.history = null;
+    this.chronicMedication = null;
 };
 
 module.exports = PatientInformation;
