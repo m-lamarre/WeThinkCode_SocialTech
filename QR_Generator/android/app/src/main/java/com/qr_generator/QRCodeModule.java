@@ -69,16 +69,11 @@ public class QRCodeModule extends ReactContextBaseJavaModule{
     }
 
     @ReactMethod
-    public void createQRCode(String value, int height, int width, String Key, Promise promise) {
+    public void createQRCode(String value, int height, int width, Promise promise) {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
 
-            String encryptedValue = CryptoHelper.encrypt(value, Key);
-            Log.i("ENCRYPTED", encryptedValue);
-            //String test = CryptoHelper.decrypt(encryptedValue, "1234567890123456");
-            //Log.i("DECRYPTED", test);
-
-            BitMatrix bitMatrix = multiFormatWriter.encode(encryptedValue, BarcodeFormat.QR_CODE, width, height);
+            BitMatrix bitMatrix = multiFormatWriter.encode(value, BarcodeFormat.QR_CODE, width, height);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
 

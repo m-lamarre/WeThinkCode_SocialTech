@@ -111,7 +111,9 @@ export default class PersonalDetails extends Component {
 
 						<DropDown title="Select Race" 
 							list={["White", "Black", "Indian", "Coloured"]}
-							onSelectedChanged={(value) => { this.state.patient.race = value; }}/>
+							onSelectedChanged={(value) => { 
+								this.state.patient.race = value; 
+							}}/>
 						<DropDown title="Select Bloodtype" 
 							list={["Not Sure", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]} 
 							onSelectedChanged={(value) => { this.state.patient.bloodType = value; }}/>

@@ -4,17 +4,30 @@ import { Image } from 'react-native';
 import {
     View, Text
 } from 'native-base';
+import AesCrypto from 'react-native-aes-kit';
 
 class QRCode extends Component {
-    async getQR() {
+    async getQRBase64(encryptedText) {
         var {
             QRCodeBase64
         } = await QRCodeAndroid.createQRCode(
-            this.state.value,
+            encryptedText,
             this.state.width,
-            this.state.height,
-            this.state.key);
-        this.setState({uri: 'data:image/png;base64,' + QRCodeBase64 });
+            this.state.height);
+        this.setState({uri: 'data:image/png;base64,' + QRCodeBase64 });         
+    }
+
+    getQR() {
+        const plaintxt = this.state.value;
+        const secretKey = '1234567890123456';
+        const iv = '1112131415161718';
+
+        AesCrypto.encrypt(plaintxt, secretKey, iv).then((cipher) => {
+            console.log("TOKEN: " + cipher);// return a string type cipher
+            this.getQRBase64(cipher);
+        }).catch(err=>{
+            console.log(err);
+        });
     }
 
     constructor(props) {

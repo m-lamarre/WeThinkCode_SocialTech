@@ -1,19 +1,32 @@
 import React, {Component} from 'react';
+import QRCodeiOS from '../../native_imports/native_imports';
 import { Image } from 'react-native';
 import {
     View, Text
 } from 'native-base';
+import AesCrypto from 'react-native-aes-kit';
 
 class QRCode extends Component {
-    async getQR() {
-        /*var {
-            QRCodeBase64
-        } = await QRCodeAndroid.createQRCode(
-            this.state.value,
-            this.state.width,
-            this.state.height,
-            this.state.key);
-        this.setState({uri: 'data:image/png;base64,' + QRCodeBase64 });*/
+    async getQRBase64(encryptedText) {
+        try {
+            var QRCodeBase64 = await QRCodeiOS.createQRCode(encryptedText);
+            this.setState({uri: 'data:image/png;base64,' + QRCodeBase64 });
+        } catch (e) {
+            console.log("TOKEN: " + e);
+        }
+    }
+
+    getQR() {
+        const plaintxt = this.state.value;
+        const secretKey = '1234567890123456';
+        const iv = '1112131415161718';
+
+        AesCrypto.encrypt(plaintxt, secretKey, iv).then((cipher) => {
+            console.log("TOKEN: " + cipher);// return a string type cipher            
+            this.getQRBase64(cipher);
+        }).catch(err=>{
+            console.log(err);
+        });
     }
 
     constructor(props) {
@@ -25,13 +38,13 @@ class QRCode extends Component {
             key: "1234567890123456",
             uri: ""
         }
-       //this.getQR();
+       this.getQR();       
     }
     
     render() {
         return (
             <View>
-                <Text>In progress.</Text>
+                <Image source={{uri: this.state.uri }} style={{width: this.state.width, height: this.state.height}}/>
             </View> 
         )
     }

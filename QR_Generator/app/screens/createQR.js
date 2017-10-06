@@ -59,7 +59,8 @@ export default class CreateQR extends Component {
     }
 
     getRace(race) {
-        if (race === "White")
+        console.log("TOKEN: " + race);
+        if (race === "White" || race == null)
             return "0";
         else if (race === "Black")
             return "1";
@@ -72,7 +73,7 @@ export default class CreateQR extends Component {
     }
 
     getBloodType(bloodType) {
-        if (bloodType === "A+")
+        if (bloodType === "A+" || bloodType == null)
             return "0";
         else if (bloodType === "A-")
             return "1";
@@ -93,11 +94,22 @@ export default class CreateQR extends Component {
     }
 
     getDate(date) {
-        return (date.getFullYear() + "-" + (date.getMonth()) + "-" + date.getDate());
+        console.log("TOKEN: " + date);
+        var strDate = date.getFullYear() + "-";
+        if (date.getMonth() < 10)
+            strDate += "0";
+        strDate += date.getMonth();
+        if (date.getDate() < 10) {
+            strDate += "-0" + date.getDate();
+        } else {
+            strDate += "-" + date.getDate();
+        }
+        return (strDate);
     }
     
     buildToken() {
         var token = "";
+
         token += this.state.patient.firstName;
         token += "|" + this.state.patient.lastName;
         token += "|" + this.getInitial(this.state.patient.initial);

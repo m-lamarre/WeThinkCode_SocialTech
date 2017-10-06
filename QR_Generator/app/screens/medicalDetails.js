@@ -55,14 +55,14 @@ export default class MedicalDetails extends Component {
 							<Label>Medical Aid</Label>
 							<Input maxLength={124} 
 								onChangeText={(value) => { 
-									this.state.patient.nextOfKinFirstName = value; 
+									this.state.patient.medicalAid = value; 
 								}}/>
 						</Item>
 						<Item floatingLabel>
 							<Label>Medical Aid Number</Label>
 							<Input maxLength={20}
 								onChangeText={(value) => {
-									this.state.patient.nextOfKinLastName = value;
+									this.state.patient.medicalAidNumber = value;
 								}}/>
 						</Item>
 						<InputGroup borderType='regular'>
