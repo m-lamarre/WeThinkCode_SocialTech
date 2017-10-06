@@ -10,7 +10,10 @@ class QRCode extends Component {
     async getQRBase64(encryptedText) {
         try {
             var QRCodeBase64 = await QRCodeiOS.createQRCode(encryptedText);
-            this.setState({uri: 'data:image/png;base64,' + QRCodeBase64 });
+            this.setState({
+                uri: 'data:image/png;base64,' + QRCodeBase64,
+                showQR: true
+            });
         } catch (e) {
             console.log("TOKEN: " + e);
         }
@@ -36,15 +39,24 @@ class QRCode extends Component {
             width: props.width,
             height: props.height,
             key: "1234567890123456",
-            uri: ""
+            uri: "",
+            showQR: false
         }
        this.getQR();       
+    }
+
+    renderQRCode() {
+        if (this.state.showQR) {
+            return (
+                <Image source={{uri: this.state.uri }} style={{width: this.state.width, height: this.state.height}}/>
+            );
+        }
     }
     
     render() {
         return (
             <View>
-                <Image source={{uri: this.state.uri }} style={{width: this.state.width, height: this.state.height}}/>
+                { this.renderQRCode() }
             </View> 
         )
     }
