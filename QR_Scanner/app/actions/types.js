@@ -1,0 +1,6 @@
+export const LOG_IN = 'LOG_IN';
+export const SIGN_UP = 'SIGN_UP';
+
+export const NAVIGATION_LOGIN = 'NAVIGATION_LOGIN';
+export const NAVIGATION_SIGNUP = 'NAVIGATION_SIGNUP';
+export const NAVIGATION_SCAN_MENU = 'NAVIGATION_SCAN_MENU';
