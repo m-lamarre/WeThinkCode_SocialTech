@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import * as types from '../../actions/types';
 import {
-   Container, Header, Left, Body, Right, Title,
-   Content, View, Form, Item, Label, Input,
-   Button, Text, Footer, FooterTab
+   Container, Content, Button, Text, Footer, FooterTab
 } from 'native-base';
 import { styles } from './style';
+import TopHeader from '../../components/TopHeader';
 
 export default class ScanQR extends Component<{}> {
     constructor(props) {
@@ -19,18 +18,7 @@ export default class ScanQR extends Component<{}> {
     render() {
         return (
             <Container>
-                <Header>
-                    <Left>
-                        <Button transparent
-                            onPress={() => { this.props.logout() }}>
-                            <Text>Logout</Text>
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title>Scan</Title>
-                    </Body>
-                    <Right/>
-                </Header>
+                <TopHeader {...this.props} title='Scan' />
                 <Content>
                     
                 </Content>

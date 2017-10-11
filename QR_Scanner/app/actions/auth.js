@@ -1,6 +1,7 @@
 import * as types from './types';
 import API from '../lib/api';
 import * as NavigationActions from './navigation';
+import * as NotificationActions from './notification';
 
 export function login(credentials) {    
     return (dispatch, getState) => {
@@ -10,6 +11,8 @@ export function login(credentials) {
             dispatch(setLoggedInState({ state: json }));
             if (json.status) {
                 dispatch(NavigationActions.navigateToScene(getState(), 'ScanID', types.NAVIGATION_SCAN_ID));
+            } else {
+                dispatch(NotificationActions.setNotificationState(true, 'Invalid username or password.'));
             }
         }).catch((ex) => {
             console.log(ex);

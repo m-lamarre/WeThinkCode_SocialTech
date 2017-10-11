@@ -3,7 +3,7 @@ import * as types from '../../actions/types';
 import {
    Container, Header, Left, Body, Right, Title,
    Content, View, Form, Item, Label, Input,
-   Button, Text
+   Button, Text, Toast
 } from 'native-base';
 import { styles } from './style';
 
@@ -14,7 +14,7 @@ export default class Login extends Component<{}> {
             username: null,
             password: null
         }
-    }
+    }    
 
     render() {
         return (
@@ -30,7 +30,8 @@ export default class Login extends Component<{}> {
                     <Form>
                         <Item floatingLabel>
                             <Label>Username:</Label>
-                            <Input onChangeText={(value) => { this.setState({username: value}) }}/>
+                            <Input autoCapitalize='none'
+                                onChangeText={(value) => { this.setState({username: value}) }}/>
                         </Item>
                         <Item floatingLabel>
                             <Label>Password:</Label>

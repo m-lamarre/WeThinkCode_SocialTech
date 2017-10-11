@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import reducer from './app/reducers';
 import AppContainer from './app/containers/AppContainer';
+import { MenuContext } from 'react-native-menu';
 
 const loggerMiddleware = createLogger({ predicate: (getState, action) => __DEV__ });
 
@@ -22,7 +23,9 @@ const store = configureStore({});
 
 const App = () => (
   <Provider store={store}>
-    <AppContainer />
+    <MenuContext style={{flex: 1}}>
+      <AppContainer />
+    </MenuContext>
   </Provider>
 );
 

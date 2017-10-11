@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import * as types from '../../actions/types';
 import {
-   Container, Header, Left, Body, Right, Title,
-   Content, View, Form, Item, Label, Input,
-   Button, Text, Footer, FooterTab
+   Container, Content, View, Form, Item, Label, Input,
+   Button, Text, Footer, FooterTab, Icon
 } from 'native-base';
 import { styles } from './style';
+import Menu, { MenuOptions, MenuOption, MenuTrigger } from 'react-native-menu';
+import TopHeader from '../../components/TopHeader';
 
 export default class ScanID extends Component<{}> {
     constructor(props) {
@@ -19,18 +20,7 @@ export default class ScanID extends Component<{}> {
     render() {
         return (
             <Container>
-                <Header>
-                    <Left>
-                        <Button transparent 
-                            onPress={() => { this.props.logout() }}>
-                            <Text>Logout</Text>
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title>Scan</Title>
-                    </Body>
-                    <Right/>
-                </Header>
+                <TopHeader {...this.props} title='Scan' />
                 <Content>
                     <Form>
                         <Item floatingLabel>

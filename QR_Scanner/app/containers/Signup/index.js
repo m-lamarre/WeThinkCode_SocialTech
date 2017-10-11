@@ -5,9 +5,40 @@ import {
    Content, View, Form, Item, Label, Input,
    Button, Text, Icon
 } from 'native-base';
+import {
+    Alert
+} from 'react-native';
 import { styles } from './style';
 
 export default class Signup extends Component<{}> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            hpcsaNumber: '',
+            email: '',
+            username: '',
+            password: '',
+
+            confirmPwd: '',
+            validPwd: false
+        }
+    }
+
+    sendSignup() {
+        if (!this.state.validPwd) {
+            Alert.alert('Password do not match.');
+            return;
+        }
+
+        var params = {
+            hpcsaNumber: this.state.hpcsaNumber,
+            username: this.state.username,
+            email: this.state.email,
+            password: this.state.password
+        }
+        this.props.signup(params);
+    }
+
     render() {
         return (
             <Container>
@@ -27,23 +58,45 @@ export default class Signup extends Component<{}> {
                     <Form>
                         <Item floatingLabel>
                             <Label>HPCSA Number:</Label>
-                            <Input />
+                            <Input onChangeText={(value) => {
+                                this.setState({ hpcsaNumber: value });
+                            }}/>
                         </Item>
                         <Item floatingLabel>
                             <Label>E-mail:</Label>
-                            <Input />
+                            <Input onChangeText={(value) => {
+                                this.setState({ email: value });
+                            }}/>
                         </Item>
                         <Item floatingLabel>
                             <Label>Username:</Label>
-                            <Input />
+                            <Input onChangeText={(value) => {
+                                this.setState({ username: value });
+                            }}/>
                         </Item>
                         <Item floatingLabel>
                             <Label>Password:</Label>
-                            <Input secureTextEntry={true}/>
+                            <Input secureTextEntry={true}
+                                onChangeText={(value) => {
+                                     var same = this.state.validPwd;
+                                     if (this.state.confirmPwd !== value)
+                                         same = false
+                                     else
+                                         same = true;
+                                     this.setState({password: value, validPwd: same });
+                                }}/>
                         </Item>
-                        <Item floatingLabel>
+                        <Item floatingLabel error={!this.state.validPwd} success={this.state.validPwd}>
                             <Label>Confirm Password:</Label>
-                            <Input secureTextEntry={true}/>
+                            <Input secureTextEntry={true}
+                                onChangeText={(value) => {
+                                    var same = this.state.validPwd;
+                                    if (this.state.password !== value)
+                                        same = false
+                                    else
+                                        same = true;
+                                    this.setState({confirmPwd: value, validPwd: same });
+                                }}/>
                         </Item>
                     </Form>
                     <View style={styles.btn_main_container}>
@@ -51,7 +104,8 @@ export default class Signup extends Component<{}> {
                         </View>
                         <View style={styles.btn_container}>
                             <Button primary full
-                                style={styles.btn}>
+                                style={styles.btn}
+                                onPress={() => { this.sendSignup() }}>
                                 <Text>Sign Up</Text>
                             </Button> 
                         </View>

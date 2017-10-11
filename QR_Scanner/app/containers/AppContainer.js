@@ -7,6 +7,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActionCreators } from '../actions';
+import { Alert } from 'react-native';
 
 import Login from './Login';
 import Signup from './Signup';
@@ -18,7 +19,15 @@ class AppContianer extends Component<{}> {
         super(props);
     }
 
+    showNotification() {
+        if (this.props.notification.available) {
+            Alert.alert(this.props.notification.message);
+            this.props.notification.available = false;
+        }
+    }
+
     render() {
+        this.showNotification();
         console.log(this.props);
         let Scene = null;
         if (this.props.navigationState.route == 'Login') {
@@ -41,6 +50,7 @@ function mapDispatchToProps(dispatch) {
 }
 export default connect((state) => { 
     return {
-        navigationState: state.navigationState
+        navigationState: state.navigationState,
+        notification: state.notification
     } 
 }, mapDispatchToProps)(AppContianer);
