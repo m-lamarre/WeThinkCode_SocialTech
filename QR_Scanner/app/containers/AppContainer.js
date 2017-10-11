@@ -10,6 +10,8 @@ import { ActionCreators } from '../actions';
 
 import Login from './Login';
 import Signup from './Signup';
+import ScanID from './ScanID';
+import ScanQR from './ScanQR';
 
 class AppContianer extends Component<{}> {
     constructor(props) {
@@ -23,11 +25,13 @@ class AppContianer extends Component<{}> {
             Scene = Login;
         } else if (this.props.navigationState.route == 'Signup') {
             Scene = Signup;
+        } else if (this.props.navigationState.route == 'ScanID') {
+            Scene = ScanID;
+        } else if (this.props.navigationState.route == 'ScanQR') {
+            Scene = ScanQR;
         }
         return (
-            <View>
-                <Scene {...this.props}/>
-            </View>
+            <Scene {...this.props}/>
         )
     }
 }

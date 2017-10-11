@@ -6,6 +6,8 @@ exports.getPatientById = function(req, res) {
 	if (!req.body.id || req.body == undefined) {
 		patientResp.status = false;
 		patientResp.message = 'No ID Number provided.'
+		res.json(patientResp);
+		return ;
 	}
 	console.log('Looking for Patient with Id: %s', req.body.id);
 
