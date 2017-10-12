@@ -1,4 +1,6 @@
 import * as types from './types';
+import API from '../lib/api';
+import * as navigationActions from './navigation'
 
 var patientInformation = require('../models/PatientInformation');
 
@@ -80,15 +82,31 @@ export function addFromQRCode(data) {
     patient.allergies = rawData[13];
     patient.history = rawData[14];
     patient.chronicMedication = rawData[15];
-    console.log(patient);
     return {
         type: types.ADD_PATIENT_HISTORY,
         patient
     }
 }
 
-export function addFromIDNumber(id) {
+export function addPatient(patient) {
+    return {
+        type: types.ADD_PATIENT_HISTORY,
+        patient
+    }
+}
 
+export function addFromIDNumber(idNumber) {
+    return (dispatch, getState) => {
+        API.post('/patient', { id: idNumber})
+        .then((resp) => {
+            let json = JSON.parse(resp._bodyText);
+            dispatch(addPatient(json.patient));
+            dispatch(navigationActions.navigateToScene(getState(), 'PatientDetails', types.NAVIGATION_PATIENT_DETAILS));
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }   
 }
 
 export function setSelectedPatient(index) {

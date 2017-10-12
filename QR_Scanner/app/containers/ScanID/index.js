@@ -11,6 +11,9 @@ import TopHeader from '../../components/TopHeader';
 export default class ScanID extends Component<{}> {
     constructor(props) {
         super(props);
+        this.state = {
+            idNumber: ''
+        }
     }
 
     render() {
@@ -21,10 +24,14 @@ export default class ScanID extends Component<{}> {
                     <Form>
                         <Item floatingLabel>
                             <Label>ID Number:</Label>
-                            <Input maxLength={13}/>
+                            <Input maxLength={13} keyboardType='numeric'
+                            onChangeText={(value) => { this.setState({idNumber: value})}}/>
                         </Item>
                     </Form>
-                    <Button style={styles.btn} full>
+                    <Button style={styles.btn} full
+                        onPress={() => {
+                            this.props.addFromIDNumber(this.state.idNumber);
+                        }}>
                         <Text>Submit</Text>
                     </Button>
                 </Content>
