@@ -1,3 +1,10 @@
+import { Platform } from 'react-native';
+
+const host = Platform.select({
+    ios: 'http://localhost:2022/api',
+    android: 'http://10.0.2.2:2022/api'
+});
+
 class API {
 
     static get(route) {
@@ -17,7 +24,7 @@ class API {
     }
 
     static xhr(route, params, verb) {
-        const host = 'http://localhost:2022/api';
+        console.log(host);
         const url = `${host}${route}`;
 
         var options = {

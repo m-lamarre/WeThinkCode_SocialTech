@@ -13,6 +13,8 @@ import Login from './Login';
 import Signup from './Signup';
 import ScanID from './ScanID';
 import ScanQR from './ScanQR';
+import PatientHistory from './PatientHistory';
+import PatientDetails from './PatientDetails';
 
 class AppContianer extends Component<{}> {
     constructor(props) {
@@ -38,6 +40,10 @@ class AppContianer extends Component<{}> {
             Scene = ScanID;
         } else if (this.props.navigationState.route == 'ScanQR') {
             Scene = ScanQR;
+        } else if (this.props.navigationState.route == 'PatientDetails') {
+            Scene = PatientDetails;
+        } else if (this.props.navigationState.route == 'PatientHistory') {
+            Scene = PatientHistory;
         }
         return (
             <Scene {...this.props}/>
@@ -51,6 +57,7 @@ function mapDispatchToProps(dispatch) {
 export default connect((state) => { 
     return {
         navigationState: state.navigationState,
-        notification: state.notification
+        notification: state.notification,
+        patients: state.patients
     } 
 }, mapDispatchToProps)(AppContianer);

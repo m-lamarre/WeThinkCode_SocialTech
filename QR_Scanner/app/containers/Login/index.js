@@ -11,8 +11,8 @@ export default class Login extends Component<{}> {
     constructor(props) {
         super(props);
         this.state = {
-            username: null,
-            password: null
+            username: 'oexall',
+            password: '0000'
         }
     }    
 
@@ -30,12 +30,12 @@ export default class Login extends Component<{}> {
                     <Form>
                         <Item floatingLabel>
                             <Label>Username:</Label>
-                            <Input autoCapitalize='none'
+                            <Input autoCapitalize='none' value="oexall"
                                 onChangeText={(value) => { this.setState({username: value}) }}/>
                         </Item>
                         <Item floatingLabel>
                             <Label>Password:</Label>
-                            <Input secureTextEntry={true}
+                            <Input secureTextEntry={true} value="0000"
                                 onChangeText={(value) => {this.setState({password: value}) }}/>
                         </Item>
                     </Form>

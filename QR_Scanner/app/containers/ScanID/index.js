@@ -11,10 +11,6 @@ import TopHeader from '../../components/TopHeader';
 export default class ScanID extends Component<{}> {
     constructor(props) {
         super(props);
-        this.state = {
-            username: null,
-            password: null
-        }
     }
 
     render() {

@@ -15,7 +15,7 @@ class TopHeader extends Component<{}> {
         if (value === 'LOGOUT') {
             this.props.logout();
         } else {
-            //this.props.navigate(value);
+            this.props.navigate(value);
         }
     }
 
@@ -27,7 +27,7 @@ class TopHeader extends Component<{}> {
                         <Icon ios='ios-settings' android="md-settings" style={{fontSize: 20}}/>
                     </MenuTrigger>
                     <MenuOptions>
-                        <MenuOption value={types.NAVIGATION_HISTORY}>
+                        <MenuOption value={types.NAVIGATION_PATIENT_HISTORY}>
                             <Text>History</Text>
                         </MenuOption>
                         <MenuOption value={types.NAVIGATION_PROFILE}>

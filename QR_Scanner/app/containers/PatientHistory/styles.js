@@ -1,14 +1,13 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-    },
-    preview: {
+    no_items: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        height: 400
+        alignItems: 'center'
+    },
+    no_items_text: {
+        fontSize: 30,
+        color: 'gray'
     }
 });
