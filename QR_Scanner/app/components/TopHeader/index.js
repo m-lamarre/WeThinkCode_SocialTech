@@ -13,7 +13,7 @@ class TopHeader extends Component<{}> {
 
     navigate(value) {
         if (value === 'LOGOUT') {
-            this.props.logout();
+            this.props.logout(this.props.loggedIn.username);
         } else {
             this.props.navigate(value);
         }

@@ -31,11 +31,14 @@ router.get('/', (req, res) => {
 	res.send('Salutations from the REST Api!')
 });
 
-router.route('/patient')
-	.post(apiAuthConfig.isAuthenticated, patientController.getPatientById);
 
 router.route('/login')
-	.post(apiAuthConfig.isAuthenticated, loginController.login);
+	.post(loginController.login);
+router.route('/logout')
+	.post(apiAuthConfig.isAuthenticated, loginController.logout);
+
+router.route('/patient')
+	.post(apiAuthConfig.isAuthenticated, patientController.getPatientById);
 
 router.route('/user/:username')
 	.get(apiAuthConfig.isAuthenticated, userContoller.getUser);

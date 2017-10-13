@@ -2,10 +2,11 @@ import * as types from './types';
 import API from '../lib/api';
 import * as NavigationActions from './navigation';
 import * as NotificationActions from './notification';
+import * as PatientActions from './patients';
 
 export function login(credentials) {    
     return (dispatch, getState) => {
-        API.post('/login', credentials)
+        API.post('/login', credentials, '')
         .then((resp) => {
             let json = JSON.parse(resp._bodyText);
             dispatch(setLoggedInState({ state: json }));
@@ -20,10 +21,19 @@ export function login(credentials) {
     }
 }
 
-export function logout() {
+export function logout(username) {
     return (dispatch, getState) => {
-        dispatch(setLoggedInState({ state: { status: false, username: null, error: null } }));
-        dispatch(NavigationActions.navigateToScene(getState(), 'Login', types.NAVIGATION_SCAN_ID));
+        API.post('/logout', { username: username }, getState().loggedIn.token)
+        .then((resp) => {
+            let json = JSON.parse(resp._bodyText);
+            if (json.status) {
+                dispatch(setLoggedInState({ state: { status: false, username: null, error: null, token: { token: null } } }));
+                dispatch(PatientActions.clearAllPatients());
+                dispatch(NavigationActions.navigateToScene(getState(), 'Login', types.NAVIGATION_SCAN_ID));
+            }
+        }).catch((ex) => {
+            console.log(ex);
+        });
     }
 }
 

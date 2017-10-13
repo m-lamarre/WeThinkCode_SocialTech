@@ -1,10 +1,10 @@
 var	passport	= require('passport');
 var bearerStrat	= require('passport-http-bearer').Strategy;
+var jwt			= require('jwt-simple');
 
-/**
- * Security Token (120 Long):
- * nGwembcqXjFT4uKTN0v0AAafpclPXIQMFexN4Yq9PTcTA4U5Iz65BpFjKNybgZiRh2FmPrqUYZFIt04hjzi7bAArxrwoW9zSHCcET6lQBocT2UIscAFNt6jA
-**/
+var secret		= require('../config/secret');
+var User		= require('../models/UserModel');
+var Token		= require('../models/TokenModel');
 
 passport.use(new bearerStrat(
 	function (accessToken, callback) {
@@ -14,12 +14,22 @@ passport.use(new bearerStrat(
 			console.log('Access attempt made without access token.');
 			return (callback(null, false));
 		}
-		if (accessToken === 'nGwembcqXjFT4uKTN0v0AAafpclPXIQMFexN4Yq9PTcTA4U5Iz65BpFjKNybgZiRh2FmPrqUYZFIt04hjzi7bAArxrwoW9zSHCcET6lQBocT2UIscAFNt6jA')
-			return (callback(null, {}));
-		else {
-			console.log('Access attempt made with incorrect access token.');
-			return (callback(null, false));
-		}
+
+		Token.findOne({ Token: accessToken }, function (err, token) {
+			if (err) return (callback(err));
+			if (!token) return (callback(null, false));
+
+			if (token.Expire <= Date.now()) {
+				console.log('Token Expired.');
+				return (callback(null, false));
+			}
+			User.findOne({ _id: token.UserId }, function (err, user) {
+				if (err) return (callback(err));
+				if (!user) return (callback(null, false));
+
+				callback(null, user);
+			});
+		});
 	}
 ));
 exports.isAuthenticated = passport.authenticate('bearer', { session: false });

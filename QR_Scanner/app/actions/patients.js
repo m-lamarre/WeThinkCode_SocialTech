@@ -97,7 +97,8 @@ export function addPatient(patient) {
 
 export function addFromIDNumber(idNumber) {
     return (dispatch, getState) => {
-        API.post('/patient', { id: idNumber})
+        console.log(getState().loggedIn);
+        API.post('/patient', { id: idNumber}, getState().loggedIn.token)
         .then((resp) => {
             let json = JSON.parse(resp._bodyText);
             dispatch(addPatient(json.patient));
@@ -107,6 +108,12 @@ export function addFromIDNumber(idNumber) {
             console.log(err);
         })
     }   
+}
+
+export function clearAllPatients() {
+    return {
+        type: types.CLEAR_PATIENT_HISTORY,
+    }
 }
 
 export function setSelectedPatient(index) {

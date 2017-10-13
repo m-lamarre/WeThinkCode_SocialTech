@@ -10,7 +10,7 @@ export default class PatientDetails extends Component<{}> {
     constructor(props) {
         super(props);
     }
-
+    
     render() {
         return (
             <Container>
@@ -29,7 +29,12 @@ export default class PatientDetails extends Component<{}> {
                     <Body>
                         <Title>Patient Details</Title>
                     </Body>
-                    <Right/>
+                    <Right>
+                        <Button transparent>
+                            <Text>Route</Text>
+                            <Icon android='md-navigate' ios='ios-navigate'/>
+                        </Button>
+                    </Right>
                 </Header>
                 <Content>
                 <Form>

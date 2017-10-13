@@ -26,6 +26,8 @@ exports.newUser = function(req, res) {
         JoinDate: new Date()
     });
 
+    /**CHECK THE HPCSA NUMBER HERE! IMPORTANT */
+
     user.save(function(err) {
         var resp = new loginResponseModel();
         if (err && err.code == 11000) {

@@ -7,23 +7,23 @@ const host = Platform.select({
 
 class API {
 
-    static get(route) {
-        return (this.xhr(route, NULL, 'GET'));
+    static get(route, token) {
+        return (this.xhr(route, NULL, 'GET', token));
     }
 
-    static put(route, params) {
-        return (this.xhr(route, params, 'PUT'));
+    static put(route, params, token) {
+        return (this.xhr(route, params, 'PUT', token));
     }
 
-    static post(route, params) {
-        return (this.xhr(route, params, 'POST'));
+    static post(route, params, token) {
+        return (this.xhr(route, params, 'POST', token));
     }
 
-    static delete(route, params) {
-        return (this.xhr(route, params, 'DELETE'));
+    static delete(route, params, token) {
+        return (this.xhr(route, params, 'DELETE', token));
     }
 
-    static xhr(route, params, verb) {
+    static xhr(route, params, verb, token) {
         console.log(host);
         const url = `${host}${route}`;
 
@@ -34,7 +34,7 @@ class API {
                 'Content-Type': 'application/json',
                 'dataType': 'json', 
                 'X-Requested-With': 'XMLHttpRequest',
-                'Authorization': 'Bearer nGwembcqXjFT4uKTN0v0AAafpclPXIQMFexN4Yq9PTcTA4U5Iz65BpFjKNybgZiRh2FmPrqUYZFIt04hjzi7bAArxrwoW9zSHCcET6lQBocT2UIscAFNt6jA' 
+                'Authorization': 'Bearer ' + token
             }
         };
         options.body = params ? JSON.stringify(params) : null;

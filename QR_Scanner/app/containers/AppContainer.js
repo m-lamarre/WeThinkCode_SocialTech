@@ -58,6 +58,7 @@ export default connect((state) => {
     return {
         navigationState: state.navigationState,
         notification: state.notification,
-        patients: state.patients
+        patients: state.patients,
+        loggedIn: state.loggedIn
     } 
 }, mapDispatchToProps)(AppContianer);
