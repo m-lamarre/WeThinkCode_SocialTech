@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { 
+	StyleSheet, 
+	View, 
+	Image,
+	AsyncStorage 
+} from 'react-native';
 import { 
 	Container, 
 	Header, 
@@ -27,6 +32,30 @@ const styles = StyleSheet.create({
 export default class Home extends Component {
 	constructor() {
 		super();
+		this.state = {
+			qrCode: null
+		}
+		this.getQRQode();
+	}
+
+	async getQRQode() {
+		try {
+			const value = await AsyncStorage.getItem('@Images:QR');
+			this.setState({
+				qrCode: value
+			});
+		} catch (error) {
+			// Error retrieving data
+			console.log(error);
+		}
+	}
+
+	renderQRImage() {
+		if (this.state.qrCode) {
+			return (
+				<Image source={{uri: this.state.qrCode}} style={{ width: 360, height: 360 }} />
+			);
+		}
 	}
 
 	render() {
@@ -37,19 +66,16 @@ export default class Home extends Component {
 						<Title>QR-Generator</Title>
 					</Body>
 					<Right>
-					<Button iconRight transparent >
-						<Icon ios="ios-settings" android="md-settings" style={{fontSize: 27}}/>
-					</Button>
 					</Right>
 				</Header>
 				<Content>
+					<View style={{flex: 1, alignItems: 'center'}}>
+						{ this.renderQRImage() }
+					</View>
 					<View style={styles.btn_container}>
 						<Button full style={styles.btn}
 							onPress={() => { Actions.Disclaimer(); }}>
 							<Text>Create QR Code</Text>
-						</Button>
-						<Button full style={styles.btn}>
-							<Text>Show QR Code</Text>
 						</Button>
 					</View>
 				</Content>

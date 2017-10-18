@@ -31,8 +31,8 @@ class DropDown extends Component {
                 selectedValue={this.state.selected1}
                 onValueChange={this.onValueChange.bind(this)} >
                 {
-                    this.props.list.map((name) => {
-                        return <Picker.Item label={name} value={name}/>
+                    this.props.list.map((name, i) => {
+                        return <Picker.Item key={i} label={name} value={name}/>
                     })
                 }
             </Picker>

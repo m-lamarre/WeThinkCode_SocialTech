@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import QRCodeAndroid from '../../native_imports/native_imports';
-import { Image } from 'react-native';
+import { Image, AsyncStorage } from 'react-native';
 import {
     View, Text
 } from 'native-base';
 import AesCrypto from 'react-native-aes-kit';
 
 class QRCode extends Component {
+
     async getQRBase64(encryptedText) {
         var {
             QRCodeBase64
@@ -17,7 +18,12 @@ class QRCode extends Component {
         this.setState({
             uri: 'data:image/png;base64,' + QRCodeBase64,
             showQR: true
-        });         
+        }); 
+        try {
+            await AsyncStorage.setItem('@Images:QR', 'data:image/png;base64,' + QRCodeBase64);
+        } catch (error) {
+            console.log('Failed to save QR Image.');
+        }       
     }
 
     getQR() {

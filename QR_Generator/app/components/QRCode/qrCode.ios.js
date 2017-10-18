@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import QRCodeiOS from '../../native_imports/native_imports';
-import { Image } from 'react-native';
+import { Image, AsyncStorage } from 'react-native';
 import {
     View, Text
 } from 'native-base';
@@ -14,8 +14,9 @@ class QRCode extends Component {
                 uri: 'data:image/png;base64,' + QRCodeBase64,
                 showQR: true
             });
+            await AsyncStorage.setItem('@Images:QR', 'data:image/png;base64,' + QRCodeBase64);
         } catch (e) {
-            console.log("TOKEN: " + e);
+            console.log(e);
         }
     }
 
