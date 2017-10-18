@@ -34,7 +34,7 @@ export default class PatientHistory extends Component<{}> {
                                 }}>
                                 <Body>
                                     <Text>{ patient.firstName + ' ' + patient.lastName }</Text>
-                                    <Text note>Something</Text>
+                                    <Text note>{ patient.medicalAid }</Text>
                                 </Body>
                             </ListItem>
                         );
