@@ -6,12 +6,17 @@ import {
 	Content,
 	Left, 
 	Body, 
+	Right,
 	Title,
 	Button,
 	Text,
-	Icon
+	Icon,
+	Footer,
+	FooterTab
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
+import DeviceInfo from 'react-native-device-info';
+import CONSTANTS from '../constants';
 
 const styles = StyleSheet.create({
 	btn_container: {
@@ -28,6 +33,20 @@ const styles = StyleSheet.create({
 export default class Disclaimer extends Component {
 	constructor() {
 		super();
+
+		this.renderDisclaimer();
+	}
+
+	renderDisclaimer() {
+		var disclaimer = CONSTANTS.DISCLAIMERS.EN;
+		var locale = DeviceInfo.getDeviceLocale;
+		if (locale == 'fr')
+			disclaimer = CONSTANTS.DISCLAIMERS.FR;
+		return (
+			<Text style={{color: 'gray'}}>
+				{disclaimer}
+			</Text>
+		);
 	}
 
 	render() {
@@ -42,17 +61,20 @@ export default class Disclaimer extends Component {
 					<Body>
 						<Title>Disclaimer</Title>
 					</Body>
+					<Right/>
 				</Header>
 				<Content>
 					<View style={styles.btn_container}>
-						<Text style={{color: 'gray'}}>
-							[Disclaimer Text here]
-						</Text>
-						<Button full style={styles.btn} onPress={() => { Actions.PersonalDetails() }}>
-							<Text>Accept Disclaimer</Text>
-						</Button>
+						{ this.renderDisclaimer() }						
 					</View>
 				</Content>
+				<Footer>
+					<FooterTab>
+						<Button onPress={() => { Actions.PersonalDetails() }}>
+							<Text>Accept Disclaimer</Text>
+						</Button>
+					</FooterTab>
+				</Footer>
 			</Container>
 		);
 	}
