@@ -32,4 +32,4 @@ This should be the same for both the QR_Generator & QR_Scanner.
 1. RUN '**npm install**'
 2. RUN '**react-native run-ios**'
 
-**Note: to run on android, you need the have a running emulator. Then call 'react-native run-android'.**
+**Note: to run on android, you need to have a running emulator. Then call 'react-native run-android'.**
