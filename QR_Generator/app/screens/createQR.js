@@ -73,32 +73,33 @@ export default class CreateQR extends Component {
     }
 
     getBloodType(bloodType) {
-        if (bloodType === "A+" || bloodType == null)
-            return "0";
-        else if (bloodType === "A-")
+        if (bloodType === "A+")
             return "1";
-        else if (bloodType === "B+")
+        else if (bloodType === "A-")
             return "2";
-        else if (bloodType === "B-")
+        else if (bloodType === "B+")
             return "3";
-        else if (bloodType === "AB+")
+        else if (bloodType === "B-")
             return "4";
-        else if (bloodType === "AB-")
+        else if (bloodType === "AB+")
             return "5";
-        else if (bloodType === "O+")
+        else if (bloodType === "AB-")
             return "6";
-        else if (bloodType === "O-")
+        else if (bloodType === "O+")
             return "7";
+        else if (bloodType === "O-")
+            return "8";
         else
-            return "9";
+            return "0";
     }
 
     getDate(date) {
         console.log("TOKEN: " + date);
         var strDate = date.getFullYear() + "-";
-        if (date.getMonth() < 10)
+        var month = date.getMonth() + 1;
+        if (month < 10)
             strDate += "0";
-        strDate += date.getMonth();
+        strDate += month;
         if (date.getDate() < 10) {
             strDate += "-0" + date.getDate();
         } else {

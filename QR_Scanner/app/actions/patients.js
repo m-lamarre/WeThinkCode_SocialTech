@@ -56,7 +56,7 @@ function getBloodType(blood) {
             return 'O-';
         default:
         case 0:
-            return 'Unkown';
+            return 'Unknown';
     }
 }
 
