@@ -209,31 +209,3 @@ export default class PersonalDetails extends Component {
 		);
 	}
 }
-
-/**
- * <DatePicker
-		style={{width: 200, margin: 10}}
-		date={this.state.date}
-		mode="date"
-		placeholder="Select Birth Date"
-		format="YYYY-MM-DD"
-		maxDate={new Date()}
-		confirmBtnText="Confirm"
-		cancelBtnText="Cancel"
-		customStyles={{
-			dateIcon: {
-				position: 'absolute',
-				left: 0,
-				top: 4,
-				marginLeft: 0
-			},
-			dateInput: {
-				marginLeft: 36
-			}
-		}}
-		onDateChange={(date) => { 
-			this.setState({date: date});
-			this.state.patient.dateOfBirth = date;
-		}}
-	/>	
- */
