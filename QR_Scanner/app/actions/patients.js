@@ -2,6 +2,7 @@ import * as types from './types';
 import API from '../lib/api';
 import * as navigationActions from './navigation'
 import * as NotificationActions from './notification';
+import CONSTANTS from '../constants';
 
 var patientInformation = require('../models/PatientInformation');
 
@@ -98,48 +99,50 @@ export function addPatient(patient) {
 
 export function addFromIDNumber(idNumber) {
     return (dispatch, getState) => {
-        /*console.log(getState().loggedIn);
-        API.post('/patient', { id: idNumber}, getState().loggedIn.token)
-        .then((resp) => {
-            let json = JSON.parse(resp._bodyText);
-            dispatch(addPatient(json.patient));
-            dispatch(navigationActions.navigateToScene(getState(), 'PatientDetails', types.NAVIGATION_PATIENT_DETAILS));
-        })
-        .catch((err) => {
-            console.log(err);
-        })*/
-
-        /**DEBUG & MVP */
-        var patient = new patientInformation();
-        patient.firstName = 'John';
-        patient.lastName = 'Doe';
-        patient.initial = 'Mr.';
-        patient.idNumber = '0000000000000';
-        patient.dateOfBirth = '25-01-1990'
-        patient.gender = 'Male';
-        patient.race = 'White';
-        patient.bloodType = 'O+';
-    
-        patient.nextOfKinFirstName = 'Jane';
-        patient.nextOfKinLastName = 'Doe';
-        patient.nextOfKinCellNumber = '012 345 6789';
-    
-        patient.medicalAid = 'Discovery Health';
-        patient.medicalAidNumber = '9876543210';
-    
-        patient.allergies = 'Bee stings';
-        patient.history = 'Knee cap operation.';
-        patient.chronicMedication = 'None';
-        var json = {
-            status: true,
-            patient: patient,
-            error: null
-        };
-        if (idNumber !== '0000000000000') {
-            dispatch(NotificationActions.setNotificationState(true, 'No Patient Details found. Please Scan QR Code.'));
+        if (CONSTANTS.USE_API) {
+            /* PRODUCTION */
+            API.post(CONSTANTS.API_ENDPOINTS.PATIENT, { id: idNumber}, getState().loggedIn.token)
+            .then((resp) => {
+                let json = JSON.parse(resp._bodyText);
+                dispatch(addPatient(json.patient));
+                dispatch(navigationActions.navigateToScene(getState(), 'PatientDetails', types.NAVIGATION_PATIENT_DETAILS));
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         } else {
-            dispatch(addPatient(json.patient));
-            dispatch(navigationActions.navigateToScene(getState(), 'PatientDetails', types.NAVIGATION_PATIENT_DETAILS));
+            /* DEBUG & MVP */
+            var patient = new patientInformation();
+            patient.firstName = 'John';
+            patient.lastName = 'Doe';
+            patient.initial = 'Mr.';
+            patient.idNumber = '0000000000000';
+            patient.dateOfBirth = '25-01-1990'
+            patient.gender = 'Male';
+            patient.race = 'White';
+            patient.bloodType = 'O+';
+        
+            patient.nextOfKinFirstName = 'Jane';
+            patient.nextOfKinLastName = 'Doe';
+            patient.nextOfKinCellNumber = '012 345 6789';
+        
+            patient.medicalAid = 'Discovery Health';
+            patient.medicalAidNumber = '9876543210';
+        
+            patient.allergies = 'Bee stings';
+            patient.history = 'Knee cap operation.';
+            patient.chronicMedication = 'None';
+            var json = {
+                status: true,
+                patient: patient,
+                error: null
+            };
+            if (idNumber !== '0000000000000') {
+                dispatch(NotificationActions.setNotificationState(true, 'No Patient Details found. Please Scan QR Code.'));
+            } else {
+                dispatch(addPatient(json.patient));
+                dispatch(navigationActions.navigateToScene(getState(), 'PatientDetails', types.NAVIGATION_PATIENT_DETAILS));
+            }
         }
     }   
 }

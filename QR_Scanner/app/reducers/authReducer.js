@@ -6,7 +6,7 @@ export const loggedIn = createReducer({ loggedIn: false, username: null, token: 
         return ({
             loggedIn: action.state.status,
             username: action.state.username,
-            token: action.state.token.token
+            token: action.state.status ? action.state.token.token : null
         });
     }
 });
