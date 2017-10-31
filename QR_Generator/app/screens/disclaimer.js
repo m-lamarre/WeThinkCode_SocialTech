@@ -71,7 +71,7 @@ export default class Disclaimer extends Component {
 				<Footer>
 					<FooterTab>
 						<Button onPress={() => { Actions.PersonalDetails() }}>
-							<Text>Accept Disclaimer</Text>
+							<Text>I accept the disclaimer</Text>
 						</Button>
 					</FooterTab>
 				</Footer>

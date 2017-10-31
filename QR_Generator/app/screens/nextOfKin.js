@@ -6,7 +6,7 @@ import {
 	Container, Header, Content, Footer,
 	Left, Body, Title, Button, Label,
 	Text, Icon,	Form, Item, Input,
-	Picker
+	Picker, FooterTab
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import DatePicker from 'react-native-datepicker'
@@ -81,9 +81,11 @@ export default class NextOfKin extends Component {
 					</Form>
 			  	</Content>
 				<Footer>
-					<Button transparent onPress={() => { Actions.MedicalDetails(this.state); }}>
-						<Text>Next</Text>
-					</Button>
+					<FooterTab>
+						<Button onPress={() => { Actions.MedicalDetails(this.state); }}>
+							<Text>Next</Text>
+						</Button>
+					</FooterTab>
 				</Footer>
 			</Container>
 		);
