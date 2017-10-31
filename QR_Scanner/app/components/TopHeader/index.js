@@ -24,7 +24,7 @@ class TopHeader extends Component<{}> {
             return (
                 <Menu onSelect={(value) => this.navigate(value) }>
                     <MenuTrigger>
-                        <Icon ios='ios-settings' android="md-settings" style={{fontSize: 20}}/>
+                        <Icon ios='ios-settings' android="md-settings" style={{fontSize: 20, marginRight: 15}}/>
                     </MenuTrigger>
                     <MenuOptions>
                         <MenuOption value={types.NAVIGATION_PATIENT_HISTORY}>
