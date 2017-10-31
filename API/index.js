@@ -16,13 +16,14 @@ var patientController	= require('./controllers/patientController.js');
 var loginController		= require('./controllers/loginController.js');
 var userContoller		= require('./controllers/userController.js');
 
-var app		=	express();
-var port	=	process.env.PORT || 2022;
-var router	=	express.Router();
+var app				= express();
+var port			= process.env.PORT || 2022;
+var router			= express.Router();
+var hospitalRouter	= express.Router();
 
 mongoose.connect('mongodb://localhost:27017/SocialDB', { useMongoClient: true });
 
-/*var whitelist = [
+var whitelist = [
 	'http://localhost:4200'
 ];
 var corsOptions = {
@@ -39,9 +40,9 @@ var issuesOptions = {
 	methods: [ 'POST', 'PUT', 'GET', 'DELETE' ],
 	credentials: true
 };
-app.use(cors(corsOptions));
-app.options('*', cors(issuesOptions));*/
-app.use(cors());
+
+hospitalRouter.use(cors(corsOptions));
+hospitalRouter.all('*', cors(issuesOptions));
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB Connection Error!'));
@@ -49,8 +50,13 @@ db.on('error', console.error.bind(console, 'MongoDB Connection Error!'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+/* Just to check if the api is returning a response. */
 router.get('/', (req, res) => {
 	res.send('Salutations from the REST Api!')
+});
+
+hospitalRouter.get('/', (req, res) => {
+	res.send('Salutations from the Hospital REST Api');
 });
 
 
@@ -70,5 +76,7 @@ router.route('/user')
 	.delete(apiAuthConfig.isAuthenticated, userContoller.deleteUser);
 
 app.use('/api', router);
+app.use('/hospt', hospitalRouter);
+
 app.listen(port);
 console.log('Listening on port: ' + port);
