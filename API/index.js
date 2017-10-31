@@ -22,7 +22,7 @@ var router	=	express.Router();
 
 mongoose.connect('mongodb://localhost:27017/SocialDB', { useMongoClient: true });
 
-var whitelist = [
+/*var whitelist = [
 	'http://localhost:4200'
 ];
 var corsOptions = {
@@ -40,7 +40,8 @@ var issuesOptions = {
 	credentials: true
 };
 app.use(cors(corsOptions));
-app.options('*', cors(issuesOptions));
+app.options('*', cors(issuesOptions));*/
+app.use(cors());
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB Connection Error!'));
