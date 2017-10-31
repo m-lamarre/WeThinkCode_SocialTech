@@ -9,6 +9,7 @@
 var express		= require('express');
 var bodyParser	= require('body-parser');
 var mongoose	= require('mongoose');
+var cors		= require('cors');
 
 var apiAuthConfig		= require('./config/security.js');
 var patientController	= require('./controllers/patientController.js');
@@ -20,6 +21,26 @@ var port	=	process.env.PORT || 2022;
 var router	=	express.Router();
 
 mongoose.connect('mongodb://localhost:27017/SocialDB', { useMongoClient: true });
+
+var whitelist = [
+	'http://localhost:4200'
+];
+var corsOptions = {
+	origin: function(origin, callback) {
+		if (whitelist.indexOf(origin) !== -1) {
+			return callback(null, true);
+		} else {
+			callback(new Error('Not Allowed by CORS'));
+		}
+	}
+};
+var issuesOptions = {
+	origin: true,
+	methods: [ 'POST', 'PUT', 'GET', 'DELETE' ],
+	credentials: true
+};
+app.use(cors(corsOptions));
+app.options('*', cors(issuesOptions));
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB Connection Error!'));
@@ -43,7 +64,7 @@ router.route('/patient')
 router.route('/user/:username')
 	.get(apiAuthConfig.isAuthenticated, userContoller.getUser);
 router.route('/user')
-	.post(apiAuthConfig.isAuthenticated, userContoller.newUser)
+	.post(userContoller.newUser)
 	.put(apiAuthConfig.isAuthenticated, userContoller.updateUser)
 	.delete(apiAuthConfig.isAuthenticated, userContoller.deleteUser);
 
