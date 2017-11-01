@@ -1,3 +1,63 @@
-<p>
-  home works! you are logged in.
-</p>
+<div class="row" style="margin-top: 10px">
+  <div class="col-3">
+    <h4 style="margin-left: 10px">Inbound Patients:</h4>
+  </div>
+  <div class="col-8" style="margin-left: 10px" *ngIf="selectedPatient !== -1">
+      <h4>Patient Information:</h4>
+  </div>
+  <div class="col-auto" *ngIf="selectedPatient !== -1">
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary">Print</button>
+        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="#">Save to PDF</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Delete Record</a>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="row" style="padding: 5px">
+  <div class="col-3">
+    <div class="list-group" id="list-tab" role="tablist">
+      <a href="javascript:;" data-toggle="list" 
+        *ngFor="let patient of incomingPatients; let i = index"
+        (click)="selectedPatientChanged(i)"
+        class="list-group-item list-group-item-action flex-column align-items-start"
+        role="tab">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ patient.firstName}} {{ patient.lastName }}</h5>
+          <small>01hr 05min ago</small>
+        </div>
+        <p class="mb-1">Incident: A10</p>
+        <small>Medical Aid: Discovery</small><br/>
+        <small>Medical Aid #: 0000000</small>
+      </a>
+    </div>
+  </div>
+  <div class="col-9" *ngIf="selectedPatient !== -1">
+      <div class="card">
+          <div class="card-header">
+              Personal Information:
+          </div>
+          <div class="card-body">
+          </div>
+      </div>
+      <div class="card">
+          <div class="card-header">
+              Next Of Kin Information:
+          </div>
+          <div class="card-body">
+          </div>
+      </div>
+      <div class="card">
+          <div class="card-header">
+              Medical Information:
+          </div>
+          <div class="card-body">
+          </div>
+      </div>
+  </div>
+</div>
