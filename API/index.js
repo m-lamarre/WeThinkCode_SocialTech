@@ -12,6 +12,7 @@ var mongoose	= require('mongoose');
 var cors		= require('cors');
 
 var apiAuthConfig		= require('./config/security.js');
+
 var patientController	= require('./controllers/patientController.js');
 var loginController		= require('./controllers/loginController.js');
 var userContoller		= require('./controllers/userController.js');

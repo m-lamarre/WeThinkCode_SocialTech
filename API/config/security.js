@@ -21,6 +21,9 @@ passport.use(new bearerStrat(
 
 			if (token.Expire <= Date.now()) {
 				console.log('Token Expired.');
+				Token.findByIdAndRemove(token._id, (err, res) => {  
+					if (err) console.log('Failed to delete expired token.'); 
+				});
 				return (callback(null, false));
 			}
 			User.findOne({ _id: token.UserId }, function (err, user) {
