@@ -7,9 +7,11 @@
  */
 
 var express		= require('express');
+var http		= require('http');
 var bodyParser	= require('body-parser');
 var mongoose	= require('mongoose');
 var cors		= require('cors');
+var socketIO	= require('socket.io');
 
 var apiAuthConfig		= require('./config/security.js');
 
@@ -18,6 +20,8 @@ var loginController		= require('./controllers/loginController.js');
 var userContoller		= require('./controllers/userController.js');
 
 var app				= express();
+var server			= http.Server(app);
+var io				= socketIO(server);
 var port			= process.env.PORT || 2022;
 var router			= express.Router();
 var hospitalRouter	= express.Router();
@@ -60,7 +64,6 @@ hospitalRouter.get('/', (req, res) => {
 	res.send('Salutations from the Hospital REST Api');
 });
 
-
 router.route('/login')
 	.post(loginController.login);
 router.route('/logout')
@@ -79,5 +82,13 @@ router.route('/user')
 app.use('/api', router);
 app.use('/hospt', hospitalRouter);
 
-app.listen(port);
-console.log('Listening on port: ' + port);
+io.on('connect', function (socket) {
+	console.log('A new hospital has connected.');
+	socket.on('disconnect', function (socket) {
+		console.log('A hospital has disconnected.');	
+	});
+});
+
+server.listen(port, function() {
+	console.log('Listening on *:' + port);
+});
