@@ -1,26 +1,35 @@
-<div class="row" style="margin-top: 10px">
-  <div class="col-3">
+<div class="row" style="margin: 10px 0px 0px 0px">
+  <div class="col-2">
     <h4 style="margin-left: 10px">Inbound Patients:</h4>
   </div>
-  <div class="col-8" style="margin-left: 10px" *ngIf="selectedPatient !== -1">
-      <h4>Patient Information:</h4>
-  </div>
-  <div class="col-auto" *ngIf="selectedPatient !== -1">
-      <div class="btn-group">
-        <button type="button" class="btn btn-primary">Print</button>
-        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <div class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#">Save to PDF</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Delete Record</a>
-        </div>
-      </div>
-  </div>
+  <div class="col-10">
+      <table style="width: 99%">
+          <tr>
+              <td>
+                  <h4>Patient Information:</h4>
+              </td>
+              <td align="right">
+                <div *ngIf="selectedPatient !== -1">
+                    <div class="btn-group" style="margin-left: 10px;">
+                        <button type="button" class="btn btn-primary">Print</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="#">Save to PDF</a>
+                        <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Delete Record</a>
+                        </div>
+                    </div>
+                </div>
+              </td>
+          </tr>
+      </table>      
+  </div>  
 </div>
-<div class="row" style="padding: 5px">
-  <div class="col-3">
+<div class="row" style="padding: 5px; margin: 10px 0px 0px 0px;">
+  <div class="col-2" *ngIf="incomingPatients.length > 0 else noInboundPatients"
+    style="overflow: scroll; overflow-y: auto; overflow-x:hidden; max-height: 80vh;">
     <div class="list-group" id="list-tab" role="tablist">
       <a href="javascript:;" data-toggle="list" 
         *ngFor="let patient of incomingPatients; let i = index"
@@ -37,7 +46,8 @@
       </a>
     </div>
   </div>
-  <div class="col-9" *ngIf="selectedPatient !== -1">
+  <div class="col-10" *ngIf="selectedPatient !== -1 else noSelectedPatient"
+    style="padding-left: 0px;">
       <div class="card">
           <div class="card-header">
               Personal Information:
@@ -59,5 +69,24 @@
           <div class="card-body">
           </div>
       </div>
+      <div class="card">
+          <div class="card-header">
+              Medical Aid Claims:
+          </div>
+          <div class="card-body">
+          </div>
+      </div>
   </div>
 </div>
+
+<ng-template #noSelectedPatient >
+    <div class="col-10 noSelectedPatient">
+        No Selected Patient
+    </div>
+</ng-template>
+
+<ng-template #noInboundPatients >
+    <div class="col-2 noInboundPatients">
+        No Inbound Patients
+    </div>
+</ng-template>
