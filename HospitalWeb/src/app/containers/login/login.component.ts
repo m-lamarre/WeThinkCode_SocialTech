@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../interfaces/user';
+import { BehaviorSubject  } from 'rxjs/BehaviorSubject';
+import { Router } from '@angular/router';
+
+declare var jQuery:any;
 
 @Component({
   selector: 'app-login',
@@ -8,9 +12,14 @@ import { User } from '../../interfaces/user';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  @ViewChild('modal')
+  modal: ElementRef
+
+  private errMessage;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -18,11 +27,19 @@ export class LoginComponent implements OnInit {
 
   onSubmit(username, password) {
     if (username === '' || password === '') {
-      //need to replace this with a modal of sorts.
+      //todo: need to replace this with a modal of sorts.
       alert('Please enter some credentials first.');
       return;
     }
 
-    this.authService.login(username, password);
+    this.authService.login(username, password)
+    .subscribe(res => {
+      if (res.status) {
+        this.router.navigate(['/']);
+      } else {
+        this.errMessage = res.msg;
+        jQuery(this.modal.nativeElement).modal('show');
+      }
+    });
   }
 }

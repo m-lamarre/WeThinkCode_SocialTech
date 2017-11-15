@@ -20,6 +20,7 @@ export class MenuComponent implements OnInit {
   }
 
   onLogout() {
+    console.log('Logout Button Pressed.');
     this.authService.logout();
   }
 

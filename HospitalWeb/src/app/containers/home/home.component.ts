@@ -41,12 +41,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   
   ngOnDestroy() {
     this.socket.disconnect();
+    this.authService.logout();
   }
 
   selectedPatientChanged(index) {
     this.selectedPatient = index;
   }
-
 }
 
 interface Patient {
