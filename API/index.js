@@ -20,6 +20,7 @@ var mLoginController	= require('./MobileControllers/loginController.js');
 var mUserContoller		= require('./MobileControllers/userController.js');
 
 var hLoginController	= require('./HospitalControllers/hospitalLoginController.js');
+var hPatientInbound		= require('./models/HospitalResponeModel.js');
 
 var app				= express();
 var server			= http.Server(app);
@@ -85,16 +86,52 @@ hospitalRouter.route('/login')
 hospitalRouter.route('/logout')
 	.post(apiAuthConfig.isAuthenticated, hLoginController.logout);
 
-app.use('/mobile', mobileRouter);
-app.use('/hospt', hospitalRouter);
+var connectedHospitals = [
+];
+
+mobileRouter.route('/inboundpatient')
+	.post((req, res) => {
+		console.log('InboundPatient: Inbound Patient');
+		var hospitalCode = req.body.hospitalCode || '';
+		var hospitalResp = new hPatientInbound();
+
+		hospitalResp.code = req.body.code || '';
+		hospitalResp.patient = req.body.patient || null;
+		hospitalResp.scannedAt = new Date();
+
+		for (var i = 0; i < connectedHospitals.length; i++) {
+			if (connectedHospitals[i].code == hospitalCode) {
+				connectedHospitals[i].socket.emit('InboundPatient', JSON.stringify(hospitalResp));
+				break;
+			}
+		}
+
+		res.sendStatus(200);
+	})
 
 io.on('connect', function (socket) {
 	console.log('A new hospital has connected.');
-	socket.on('disconnect', function (socket) {
-		console.log('A hospital has disconnected.');	
+
+	socket.on('newHospital', function (msg) {
+		console.log('Hospital Client Id: ' + msg);
+		connectedHospitals.push({ socketID: socket.id, code: msg, socket: socket });
+	});
+
+	socket.on('InboundPatient', function (msg) {
+		console.log('Not here baka.');
+	});
+	socket.on('disconnect', function (sckt) {
+		for (var i = 0; i < connectedHospitals.length; i++) {
+			if (connectedHospitals[i].socketID === socket.id) {
+				connectedHospitals.splice(i, 1);
+				return ;
+			}
+		}
 	});
 });
 
+app.use('/mobile', mobileRouter);
+app.use('/hospt', hospitalRouter);
 server.listen(port, function() {
 	console.log('Listening on *:' + port);
 });

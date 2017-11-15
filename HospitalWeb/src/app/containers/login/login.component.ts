@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
 
   onSubmit(username, password) {
     if (username === '' || password === '') {
-      //todo: need to replace this with a modal of sorts.
-      alert('Please enter some credentials first.');
+      this.errMessage = 'Hospital Code and password required.';
+      jQuery(this.modal.nativeElement).modal('show');
       return;
     }
 

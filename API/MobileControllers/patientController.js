@@ -15,7 +15,7 @@ exports.getPatientById = function(req, res) {
 
 	patientResp.status = true;
 	patientResp.message = null;
-	patientResp.patient.firstName = 'Owen';
-	patientResp.patient.lastName = 'Exall';
+	patientResp.patient.firstName = 'John';
+	patientResp.patient.lastName = 'Doe';
 	res.json(patientResp);
 }

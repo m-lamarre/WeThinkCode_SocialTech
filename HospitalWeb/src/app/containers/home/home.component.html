@@ -32,8 +32,7 @@
     style="overflow: scroll; overflow-y: auto; overflow-x:hidden; max-height: 80vh;">
     <div class="list-group" id="list-tab" role="tablist">
       <a href="javascript:;" data-toggle="list" 
-        *ngFor="let patient of incomingPatients; let i = index"
-        (click)="selectedPatientChanged(i)"
+        *ngFor="let patient of incomingPatients; let i = index" (click)="selectedPatientChanged(i)"
         class="list-group-item list-group-item-action flex-column align-items-start"
         role="tab">
         <div class="d-flex w-100 justify-content-between">

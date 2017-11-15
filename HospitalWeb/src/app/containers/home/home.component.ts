@@ -13,17 +13,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   socket: any;
   selectedPatient: number = -1;
   incomingPatients: Patient[] = [
-    { firstName: 'John', lastName: 'Doe', initial: 'Mr.', idNumber: '0000000000000', dateOfBirth: new Date(), gender: 'Male',
+    /*{ firstName: 'John', lastName: 'Doe', initial: 'Mr.', idNumber: '0000000000000', dateOfBirth: new Date(), gender: 'Male',
       race: 'white', nokFirstName: 'Joshua', nokLastName: 'Doe', nokCellNumber: '012 345 6789', allergies: 'none', bloodType: 'A+',
       history: 'Took an arrow to the knee', chronicMedication: 'none', medicalAid: 'BestMed', medicalAidNumber: 'AB 00001' },
 
-    { firstName: 'Owen', lastName: 'Exall', initial: 'Mr.', idNumber: '0000000000001', dateOfBirth: new Date(), gender: 'Male',
+    /*{ firstName: 'Owen', lastName: 'Exall', initial: 'Mr.', idNumber: '0000000000001', dateOfBirth: new Date(), gender: 'Male',
     race: 'white', nokFirstName: 'Michael', nokLastName: 'Exall', nokCellNumber: '012 345 6790', allergies: 'none', bloodType: 'A+',
     history: 'Took an arrow to the knee', chronicMedication: 'none', medicalAid: 'BestMed', medicalAidNumber: 'AB 00001' },
 
     { firstName: 'Jane', lastName: 'Doe', initial: 'Mrs.', idNumber: '0000000000002', dateOfBirth: new Date(), gender: 'Female',
       race: 'white', nokFirstName: 'Joshua', nokLastName: 'Doe', nokCellNumber: '012 345 6791', allergies: 'none', bloodType: 'A+',
-      history: 'Took an arrow to the knee', chronicMedication: 'none', medicalAid: 'BestMed', medicalAidNumber: 'AB 00001' }
+      history: 'Took an arrow to the knee', chronicMedication: 'none', medicalAid: 'BestMed', medicalAidNumber: 'AB 00001' }*/
   ];
 
   constructor(
@@ -33,10 +33,22 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.location.onPopState(() => {
       this.authService.logout();
     });
+
+    this.socket = io('http://localhost:2022');
+    this.socket.emit('newHospital', localStorage.getItem('code'));
+
+    this.socket.on('InboundPatient', this.inboundPatient.bind(this));
+  }
+
+  inboundPatient(msg) {
+    var msg = JSON.parse(msg);
+    console.log(msg);
+    this.incomingPatients.push(msg.patient);
+    console.log(this.incomingPatients);
   }
 
   ngOnInit() {
-    this.socket = io('http://localhost:2022');
+    
   }
   
   ngOnDestroy() {

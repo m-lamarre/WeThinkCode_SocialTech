@@ -52,18 +52,15 @@ export class AuthService {
 
     var headers = new Headers();
     headers.append('Authorization', 'Bearer ' + localStorage.getItem('auth_token'));
-    console.log('Bearer ' + localStorage.getItem('auth_token'));
 
     var body = {
       code: localStorage.getItem('code')
     };
     var endpoint = this.consts.USE_LOCALHOST ? this.consts.LOCALHOST_LOGOUT_ENDPOINT : this.consts.API_LOGOUT_ENDPOINT;
 
-    console.log('Sending Logout Request. ' + endpoint);
     this.http.post(endpoint, body, { headers })
       .subscribe(res => console.log(res),
                 error => console.log(error));
-    console.log('Done Sending');
 
     localStorage.clear();
     this.loggedIn.next(false);
