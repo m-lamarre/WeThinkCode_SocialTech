@@ -1,109 +1,104 @@
 var loginResponseModel  = require('../models/LoginResponseModel');
-var User                = require('../models/UserModel');
+var Hospital            = require('../models/HospitalModel');
 var Token               = require('../models/TokenModel');
 var secret              = require('../config/secret');
 var jwt                 = require('jwt-simple');
-
-function genToken() {
-    var expires = expiresIn(12);
-    var token = jwt.encode({
-        expires: expires
-    }, secret.secretToken());
-    return ({
-        token: token,
-        expires: expires
-    });
-}
 
 function expiresIn(hours) {
     var d = new Date();
     return (d.setHours(d.getHours()+ hours));
 }
 
-exports.login = function(req, res) {
-    console.log('LoginRequest: Received New.'); //TODO: Remove for PROD.
+function genToken() {
+    var expires = expiresIn(24);
+    var token = jwt.encode({
+        expires: expires
+    }, secret.specialHospitalToken());
+    return ({
+        token: token,
+        expires: expires
+    });
+}
+
+exports.login = function (req, res) {
+    console.log('HospitalLoginRequest: Received New');
     var resp = new loginResponseModel();
 
-    var username = req.body.username || '';
+    var code = req.body.code || '';
     var password = req.body.password || '';
-    var special = req.body.token || ''
+    var special = req.body.token || '';
 
-    if (username == '' || password == '') {
+    if (code == '' || password == '') {
         resp.status = false;
-        resp.error = 'Invalid credentials.';
+        resp.error = 'Invalid credentials';
         res.json(resp);
         return ;
     }
-    if (special == '' || special !== secret.specialToken()) {
+    if (special == '' || special !== secret.specialHospitalToken()) {
         resp.status = false;
-        resp.error = 'Invalid credentials.';
+        resp.error = 'Unauthorized access.';
         res.json(resp);
         return ;
     }
-    
-    User.findOne({ Username: username }).exec()
-        .then(function (user) {
-            if (!user) {
+
+    Hospital.findOne({ Code: code }).exec()
+        .then(function (hospital) {
+            if (!hospital) {
                 resp.status = false;
-                resp.error = 'Invalid username or password.';
+                resp.error = 'Invalid hospital code or password';
                 res.json(resp);
                 return ;
             }
-
-            user.verifyPassword(password, (err, isMatch) => {
+            hospital.verifyPassword(password, (err, isMatch) => {
                 if (!err && isMatch) {
                     resp.status = true;
-                    resp.username = user.Username;
+                    resp.username = code;
                     resp.token = genToken();
 
                     var nToken = new Token({
-                        UserId: user._id,
+                        UserId: code,
+                        For: 'Hospital',
                         Token: resp.token.token,
                         Expire: resp.token.expires
                     });
                     nToken.save((err) => {
                         if (err) {
-                            console.log('Failed to save token.');
+                            console.log('Failed to save Token.');
                         }
                     });
-
                     res.json(resp);
                 } else {
                     resp.status = false;
-                    resp.error = 'Invalid username or password.';
+                    resp.error = 'Invalid hospital code or password.';
                     res.json(resp);
                 }
             });
-        })
-        .catch(function (err) {
-            resp.status = false;
-            resp.error = 'Invalid username or password.';
-            res.json(resp);
         });
-};
+}
 
 exports.logout = function (req, res) {
-    User.findOne({ Username: req.body.username }).exec()
-    .then((user) => {
-        if (!user) {
+    console.log('HospitalLogoutRequest: Received New.');
+    Hospital.findOne({ Code: req.body.code }).exec()
+    .then((hospt) => {
+        if (!hospt) {
             res.json({ status: false });
             return ;
         }
 
-        Token.findOne({ UserId: user._id }).exec()
+        Token.findOne({ UserId: hospt.Code }).exec()
         .then((token) => {
             if (!token) {
                 res.json({ status: true });
                 return ;
             }
-
+            
             Token.remove({ _id: token._id }, function (err) {
                 if (err) {
                     console.log(err);
-                    return ;
+                    res.json({ status: true });
                 }
                 res.json({ status: true });
-            });
-        });
+            })
+        })
     });
-};
+}

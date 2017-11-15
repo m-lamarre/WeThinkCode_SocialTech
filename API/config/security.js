@@ -4,6 +4,7 @@ var jwt			= require('jwt-simple');
 
 var secret		= require('../config/secret');
 var User		= require('../models/UserModel');
+var Hospital	= require('../models/HospitalModel');
 var Token		= require('../models/TokenModel');
 
 passport.use(new bearerStrat(
@@ -26,12 +27,21 @@ passport.use(new bearerStrat(
 				});
 				return (callback(null, false));
 			}
-			User.findOne({ _id: token.UserId }, function (err, user) {
-				if (err) return (callback(err));
-				if (!user) return (callback(null, false));
+			if (token.For === 'Paramedic') {
+				User.findOne({ _id: token.UserId }, function (err, user) {
+					if (err) return (callback(err));
+					if (!user) return (callback(null, false));
 
-				callback(null, user);
-			});
+					callback(null, user);
+				});
+			} else if (token.For === 'Hospital') {
+				Hospital.findOne({ Code: token.UserId }, function(err, hospital) {
+					if (err) return (callback(err));
+					if (!hospital) return (callback(null, false));
+
+					callback(null, hospital);
+				});
+			}
 		});
 	}
 ));

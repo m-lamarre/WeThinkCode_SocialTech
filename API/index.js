@@ -15,15 +15,17 @@ var socketIO	= require('socket.io');
 
 var apiAuthConfig		= require('./config/security.js');
 
-var patientController	= require('./controllers/patientController.js');
-var loginController		= require('./controllers/loginController.js');
-var userContoller		= require('./controllers/userController.js');
+var mPatientController	= require('./MobileControllers/patientController.js');
+var mLoginController	= require('./MobileControllers/loginController.js');
+var mUserContoller		= require('./MobileControllers/userController.js');
+
+var hLoginController	= require('./HospitalControllers/hospitalLoginController.js');
 
 var app				= express();
 var server			= http.Server(app);
 var io				= socketIO(server);
 var port			= process.env.PORT || 2022;
-var router			= express.Router();
+var mobileRouter	= express.Router();
 var hospitalRouter	= express.Router();
 
 mongoose.connect('mongodb://localhost:27017/SocialDB', { useMongoClient: true });
@@ -52,34 +54,38 @@ hospitalRouter.all('*', cors(issuesOptions));
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB Connection Error!'));
 
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended:false }));
 app.use(bodyParser.json());
 
 /* Just to check if the api is returning a response. */
-router.get('/', (req, res) => {
+mobileRouter.get('/', (req, res) => {
 	res.send('Salutations from the REST Api!')
 });
-
 hospitalRouter.get('/', (req, res) => {
 	res.send('Salutations from the Hospital REST Api');
 });
 
-router.route('/login')
-	.post(loginController.login);
-router.route('/logout')
-	.post(apiAuthConfig.isAuthenticated, loginController.logout);
+mobileRouter.route('/login')
+	.post(mLoginController.login);
+mobileRouter.route('/logout')
+	.post(apiAuthConfig.isAuthenticated, mLoginController.logout);
 
-router.route('/patient')
-	.post(apiAuthConfig.isAuthenticated, patientController.getPatientById);
+mobileRouter.route('/patient')
+	.post(apiAuthConfig.isAuthenticated, mPatientController.getPatientById);
 
-router.route('/user/:username')
-	.get(apiAuthConfig.isAuthenticated, userContoller.getUser);
-router.route('/user')
-	.post(userContoller.newUser)
-	.put(apiAuthConfig.isAuthenticated, userContoller.updateUser)
-	.delete(apiAuthConfig.isAuthenticated, userContoller.deleteUser);
+mobileRouter.route('/user/:username')
+	.get(apiAuthConfig.isAuthenticated, mUserContoller.getUser);
+mobileRouter.route('/user')
+	.post(mUserContoller.newUser)
+	.put(apiAuthConfig.isAuthenticated, mUserContoller.updateUser)
+	.delete(apiAuthConfig.isAuthenticated, mUserContoller.deleteUser);
 
-app.use('/api', router);
+hospitalRouter.route('/login')
+	.post(hLoginController.login);
+hospitalRouter.route('/logout')
+	.post(apiAuthConfig.isAuthenticated, hLoginController.logout);
+
+app.use('/mobile', mobileRouter);
 app.use('/hospt', hospitalRouter);
 
 io.on('connect', function (socket) {
