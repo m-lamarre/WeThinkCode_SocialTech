@@ -32,43 +32,158 @@
     style="overflow: scroll; overflow-y: auto; overflow-x:hidden; max-height: 80vh;">
     <div class="list-group" id="list-tab" role="tablist">
       <a href="javascript:;" data-toggle="list" 
-        *ngFor="let patient of incomingPatients; let i = index" (click)="selectedPatientChanged(i)"
+        *ngFor="let iPatient of incomingPatients; let i = index" (click)="selectedPatientChanged(i)"
         class="list-group-item list-group-item-action flex-column align-items-start"
         role="tab">
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{ patient.firstName}} {{ patient.lastName }}</h5>
+          <h5 class="mb-1">{{ iPatient.patient.firstName}} {{ iPatient.patient.lastName }}</h5>
           <small>01hr 05min ago</small>
         </div>
-        <p class="mb-1">Incident: A10</p>
-        <small>Medical Aid: Discovery</small><br/>
-        <small>Medical Aid #: 0000000</small>
+        <p class="mb-1">Incident: {{ iPatient.code }}</p>
+        <small>Medical Aid: {{ iPatient.patient.medicalAid }}</small><br/>
+        <small>Medical Aid #: {{ iPatient.patient.medicalAidNumber }}</small>
       </a>
     </div>
   </div>
   <div class="col-10" *ngIf="selectedPatient !== -1 else noSelectedPatient"
     style="padding-left: 0px;">
+      <!--Personal Details Card-->
       <div class="card">
           <div class="card-header">
               Personal Information:
           </div>
           <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="cb_initial">Initial:</label>
+                    <select id="cb_initial" class="form-control"
+                        [(ngModel)]="incomingPatients[selectedPatient].patient.initial" name="initial">
+                        <option selected>Choose...</option>
+                        <option>Mr.</option>
+                        <option>Mrs.</option>
+                        <option>Ms.</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="txtb_firstName">First Name:</label>
+                    <input type="text" class="form-control" id="txtb_firstName" placeholder="First Name"
+                        [(ngModel)]="incomingPatients[selectedPatient].patient.firstName" name="firstName">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="txtb_lastName">Last Name:</label>
+                    <input type="text" class="form-control" id="txtb_lastName" placeholder="Last Name"
+                        [(ngModel)]="incomingPatients[selectedPatient].patient.lastName" name="lastName">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="txtb_idNumber">ID Number:</label>
+                    <input type="text" class="form-control" id="txtb_idNumber" placeholder="ID Number" maxlength="13"
+                        [(ngModel)]="incomingPatients[selectedPatient].patient.idNumber" name="idNumber">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="txtb_dateOfBirth">Date of Birth:</label>
+                    <input type="text" class="form-control" id="txtb_dateOfBirth" placeholder="Date of Birth"
+                        [(ngModel)]="incomingPatients[selectedPatient].patient.dateOfBirth" name="dateOfBirth">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="cb_gender">Biological Gender:</label>
+                    <select id="cb_gender" class="form-control"
+                        [(ngModel)]="incomingPatients[selectedPatient].patient.gender" name="gender">
+                        <option selected>Choose...</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="txtb_ethnicity">Ethnicity:</label>
+                    <input type="text" class="form-control" id="txtb_Ethnicity" placeholder="ID Number"
+                        [(ngModel)]="incomingPatients[selectedPatient].patient.race" name="race">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="cb_bloodType">Blood-Type:</label>
+                    <select id="cb_bloodType" class="form-control"
+                        [(ngModel)]="incomingPatients[selectedPatient].patient.bloodType" name="bloodType">
+                        <option selected>Choose...</option>
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+                    </select>
+                </div>                    
+            </div>
           </div>
       </div>
+      <!--Next of Kin Details Card-->
       <div class="card">
           <div class="card-header">
               Next Of Kin Information:
           </div>
           <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="txtb_nokFirstName">First Name:</label>
+                    <input type="text" class="form-control" id="txtb_nokFirstName" placeholder="First Name" 
+                    [(ngModel)]="incomingPatients[selectedPatient].patient.nextOfKinFirstName" name="nextOfKinFirstName">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="txtb_nokLastName">Last Name:</label>
+                    <input type="text" class="form-control" id="txtb_nokLastName" placeholder="Last Name"
+                        [(ngModel)]="incomingPatients[selectedPatient].patient.nextOfKinLastName" name="nextOfKinLastName">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="txtb_nokCellNumber">Cellphone Number:</label>
+                    <input type="text" class="form-control" id="txtb_nokCellNumber" placeholder="Cellphone Number"
+                        [(ngModel)]="incomingPatients[selectedPatient].patient.nextOfKinCellNumber" name="nextOfKinCellNumber">
+                </div>
+            </div>
           </div>
       </div>
+      <!--Medical Details Card-->
       <div class="card">
           <div class="card-header">
               Medical Information:
           </div>
           <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="txtb_medicalAid">Medical Aid:</label>
+                    <input type="text" class="form-control" id="txtb_medicalAid" placeholder="Medical Aid" 
+                    [(ngModel)]="incomingPatients[selectedPatient].patient.medicalAid" name="medicalAid">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="txtb_medicalAidNumber">Medical Aid Number:</label>
+                    <input type="text" class="form-control" id="txtb_medicalAidNumber" placeholder="Medical Aid Number"
+                        [(ngModel)]="incomingPatients[selectedPatient].patient.medicalAidNumber" name="medicalAidNumber">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="txtb_allergies">Allergies:</label>
+                    <textarea class="form-control" id="txtb_allergies" rows="5"
+                        [(ngModel)]="incomingPatients[selectedPatient].patient.allergies" name="allergies"></textarea>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="txtb_history">History:</label>
+                    <textarea class="form-control" id="txtb_history" rows="5"
+                    [(ngModel)]="incomingPatients[selectedPatient].patient.history" name="history"></textarea>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="txtb_chronicMedication">Chronic Medication:</label>
+                    <textarea class="form-control" id="txtb_chronicMedication" rows="5"
+                        [(ngModel)]="incomingPatients[selectedPatient].patient.chronicMedication" name="chronicMedication"></textarea>
+                </div>
+            </div>
           </div>
       </div>
-      <div class="card">
+      <!--Medical Aid Claims Details Card-->
+      <div class="card" *ngIf="incomingPatients[selectedPatient].requestedMedicalAidClaim">
           <div class="card-header">
               Medical Aid Claims:
           </div>
