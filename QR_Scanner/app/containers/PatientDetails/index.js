@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import * as types from '../../actions/types';
+import { AsyncStorage } from 'react-native';
 import {
    Container, Header, Left, Body, Right, Title,
    Content, View, Form, Item, Label, Input,
-   Button, Text, Icon, InputGroup
+   Button, Text, Icon, InputGroup, ActionSheet
 } from 'native-base';
+import openMap from '../../lib/openMaps';
+
 
 export default class PatientDetails extends Component<{}> {
     constructor(props) {
         super(props);
-    }
+    }    
     
     render() {
         return (
@@ -19,9 +22,9 @@ export default class PatientDetails extends Component<{}> {
                         <Button transparent
                             onPress={() => {                                 
                                 if (this.props.navigationState.previousRoute === 'PatientHistory')
-                                    this.props.navigate(types.NAVIGATION_PATIENT_HISTORY) 
+                                    this.props.navigate(types.NAVIGATION_PATIENT_HISTORY);
                                 else 
-                                    this.props.navigate(types.NAVIGATION_SCAN_ID) 
+                                    this.props.navigate(types.NAVIGATION_SCAN_ID);
                             }}>
                             <Icon name='arrow-back' />
                         </Button>
@@ -30,9 +33,11 @@ export default class PatientDetails extends Component<{}> {
                         <Title>Patient Details</Title>
                     </Body>
                     <Right>
-                        <Button transparent>
-                            <Text>Route</Text>
-                            <Icon android='md-navigate' ios='ios-navigate'/>
+                        <Button transparent onPress={() => {
+                            this.props.getHospitals();
+                            this.props.navigate(types.NAVIGATION_HOSPITAL_LIST);
+                        }}>
+                            <Text>Hosp.</Text>
                         </Button>
                     </Right>
                 </Header>

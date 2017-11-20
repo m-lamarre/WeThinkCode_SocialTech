@@ -14,8 +14,10 @@ export function navigate(action) {
             return dispatch(navigateToScene(getState(), 'PatientHistory', types.NAVIGATION_PATIENT_HISTORY));
         else if (action == types.NAVIGATION_PATIENT_DETAILS)
             return dispatch(navigateToScene(getState(), 'PatientDetails', types.NAVIGATION_PATIENT_DETAILS));
-        else if (action = types.NAVIGATION_PROFILE)
+        else if (action == types.NAVIGATION_PROFILE)
             return dispatch(navigateToScene(getState(), 'Profile', types.NAVIGATION_PROFILE));
+        else if (action == types.NAVIGATION_HOSPITAL_LIST)
+            return dispatch(navigateToScene(getState(), 'HospitalList', types.NAVIGATION_HOSPITAL_LIST));
 
         dispatch(navigateToScene(getState(), 'Login', types.NAVIGATION_LOGIN));
     }

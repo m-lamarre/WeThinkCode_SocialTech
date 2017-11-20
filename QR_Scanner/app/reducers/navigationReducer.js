@@ -37,5 +37,11 @@ export const navigationState = createReducer({ previousRoute: '', route: 'Login'
             previousRoute: state.route,
             route: action.state.route
         });
+    },
+    [types.NAVIGATION_HOSPITAL_LIST](state, action) {
+        return ({
+            previousRoute: state.route,
+            route: action.state.route
+        });
     }
 });

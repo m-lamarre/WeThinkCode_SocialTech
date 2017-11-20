@@ -1,11 +1,17 @@
 import { Platform } from 'react-native';
+import CONSTS from '../constants';
 
 const host = Platform.select({
-    ios: 'http://localhost:2022/api',
-    android: 'http://10.0.2.2:2022/api'
+    ios: 'http://localhost:2022/mobile',
+    android: 'http://10.0.2.2:2022/mobile'
 });
 
 class API {
+    /*constructor() {
+        if (CONSTS.USE_API) {
+            host = CONSTS.API_HOST;
+        }
+    }*/
 
     static get(route, token) {
         return (this.xhr(route, NULL, 'GET', token));
@@ -26,6 +32,7 @@ class API {
     static xhr(route, params, verb, token) {
         console.log(host);
         const url = `${host}${route}`;
+        console.log(url);
 
         var options = {
             method: verb,
@@ -40,11 +47,13 @@ class API {
         options.body = params ? JSON.stringify(params) : null;
 
         return (fetch(url, options).then((resp) => {
-           let json = resp.json();
-           if (resp.ok) {
-               return (resp);
-           }
-           return (json.then(err => {throw err}));
+            if (resp == 'Ok')
+                return { status: 'Ok'};     
+            let json = resp.json();
+            if (resp.ok) {
+                return (resp);
+            }
+            return (json.then(err => {throw err}));
         }));
     }
 }

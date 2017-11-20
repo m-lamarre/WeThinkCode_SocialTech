@@ -15,6 +15,7 @@ import ScanID from './ScanID';
 import ScanQR from './ScanQR';
 import PatientHistory from './PatientHistory';
 import PatientDetails from './PatientDetails';
+import HospitalList from './HospitalList';
 
 class AppContianer extends Component<{}> {
     constructor(props) {
@@ -44,6 +45,8 @@ class AppContianer extends Component<{}> {
             Scene = PatientDetails;
         } else if (this.props.navigationState.route == 'PatientHistory') {
             Scene = PatientHistory;
+        } else if (this.props.navigationState.route == 'HospitalList') {
+            Scene = HospitalList;
         }
         return (
             <Scene {...this.props}/>
@@ -59,6 +62,7 @@ export default connect((state) => {
         navigationState: state.navigationState,
         notification: state.notification,
         patients: state.patients,
-        loggedIn: state.loggedIn
+        loggedIn: state.loggedIn,
+        hospitals: state.hospitals
     } 
 }, mapDispatchToProps)(AppContianer);

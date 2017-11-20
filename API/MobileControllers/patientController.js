@@ -15,7 +15,22 @@ exports.getPatientById = function(req, res) {
 
 	patientResp.status = true;
 	patientResp.message = null;
-	patientResp.patient.firstName = 'John';
+	patientResp.patient.initial = "Mr."
+	patientResp.patient.firstName = 'Nathan';
 	patientResp.patient.lastName = 'Doe';
+	patientResp.patient.idNumber = "1111111111111";
+	patientResp.patient.dateOfBirth = "1994-06-06";
+	patientResp.patient.gender = "Male";
+	patientResp.patient.race = "Coulered";
+
+	patientResp.patient.nextOfKinFirstName = "Anikin";
+	patientResp.patient.nextOfKinLastName = "Skywalker";
+	patientResp.patient.nextOfKinCellNumber = "012 345 6789";
+	
+	patientResp.patient.medicalAid = "Bonitas";
+	patientResp.patient.medicalAid = "00001 ABC";
+	patientResp.patient.allergies = "Allergic to bee sting";
+	patientResp.patient.history = "None";
+	patientResp.patient.chronicMedication = "Chronic Asthma";
 	res.json(patientResp);
 }

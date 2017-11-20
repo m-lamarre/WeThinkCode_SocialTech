@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../interfaces/user';
 import { BehaviorSubject  } from 'rxjs/BehaviorSubject';
@@ -12,8 +12,7 @@ declare var jQuery:any;
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('modal')
-  modal: ElementRef
+  showModal: boolean = false;
 
   private errMessage;
 
@@ -25,10 +24,14 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  closeModal() {
+    this.showModal = false;
+  }
+
   onSubmit(username, password) {
     if (username === '' || password === '') {
       this.errMessage = 'Hospital Code and password required.';
-      jQuery(this.modal.nativeElement).modal('show');
+      this.showModal = true;
       return;
     }
 
@@ -38,7 +41,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/']);
       } else {
         this.errMessage = res.msg;
-        jQuery(this.modal.nativeElement).modal('show');
+       this.showModal = true;
       }
     });
   }

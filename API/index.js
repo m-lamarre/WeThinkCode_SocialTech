@@ -18,6 +18,7 @@ var apiAuthConfig		= require('./config/security.js');
 var mPatientController	= require('./MobileControllers/patientController.js');
 var mLoginController	= require('./MobileControllers/loginController.js');
 var mUserContoller		= require('./MobileControllers/userController.js');
+var mHospitalController	= require('./MobileControllers/hospitalController.js');
 
 var hLoginController	= require('./HospitalControllers/hospitalLoginController.js');
 var hPatientInbound		= require('./models/HospitalResponeModel.js');
@@ -80,6 +81,8 @@ mobileRouter.route('/user')
 	.post(mUserContoller.newUser)
 	.put(apiAuthConfig.isAuthenticated, mUserContoller.updateUser)
 	.delete(apiAuthConfig.isAuthenticated, mUserContoller.deleteUser);
+mobileRouter.route('/hospitals')
+	.post(apiAuthConfig.isAuthenticated, mHospitalController.getHospitals);
 
 hospitalRouter.route('/login')
 	.post(hLoginController.login);
