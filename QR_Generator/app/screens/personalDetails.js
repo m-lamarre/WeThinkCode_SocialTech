@@ -6,7 +6,7 @@ import {
 	Container, Header, Content, Footer,
 	Left, Body, Title, Button, Label,
 	Text, Icon,	Form, Item, Input,
-	Picker, FooterTab
+	Picker, FooterTab, Right
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import DatePicker from 'react-native-datepicker'
@@ -107,8 +107,9 @@ export default class PersonalDetails extends Component {
 						</Button>
 					</Left>
 					<Body>
-						<Title>Personal Details</Title>
+						<Title>Personal Info</Title>
 					</Body>
+					<Right />
 				</Header>
 				<Content>
 					<Form>

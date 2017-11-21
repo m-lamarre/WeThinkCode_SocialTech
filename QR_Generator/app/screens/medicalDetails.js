@@ -6,7 +6,8 @@ import {
 	Container, Header, Content, Footer,
 	Left, Body, Title, Button, Label,
 	Text, Icon,	Form, Item, Input,
-	Picker, InputGroup, FooterTab
+	Picker, InputGroup, FooterTab,
+	Right
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 
@@ -46,8 +47,9 @@ export default class MedicalDetails extends Component {
 						</Button>
 					</Left>
 					<Body>
-						<Title>Medical Details</Title>
+						<Title>Medical Info</Title>
 					</Body>
+					<Right />
 				</Header>
 				<Content>
 					<Form>
@@ -99,6 +101,9 @@ export default class MedicalDetails extends Component {
 			  	</Content>
 				<Footer>
 					<FooterTab>
+						<Button onPress={() => { Actions.pop(); }}>
+							<Text>Back</Text>
+						</Button>
 						<Button onPress={() => { Actions.CreateQR(this.state); }}>
 							<Text>Finish</Text>
 						</Button>

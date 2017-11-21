@@ -34,14 +34,14 @@ export default class Disclaimer extends Component {
 	constructor() {
 		super();
 
-		this.renderDisclaimer();
+		//this.renderDisclaimer();
 	}
 
 	renderDisclaimer() {
 		var disclaimer = CONSTANTS.DISCLAIMERS.EN;
-		var locale = DeviceInfo.getDeviceLocale;
+		/*var locale = DeviceInfo.getDeviceLocale;
 		if (locale == 'fr')
-			disclaimer = CONSTANTS.DISCLAIMERS.FR;
+			disclaimer = CONSTANTS.DISCLAIMERS.FR;*/
 		return (
 			<Text style={{color: 'gray'}}>
 				{disclaimer}
