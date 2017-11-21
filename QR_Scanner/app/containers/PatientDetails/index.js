@@ -6,8 +6,6 @@ import {
    Content, View, Form, Item, Label, Input,
    Button, Text, Icon, InputGroup, ActionSheet
 } from 'native-base';
-import openMap from '../../lib/openMaps';
-
 
 export default class PatientDetails extends Component<{}> {
     constructor(props) {

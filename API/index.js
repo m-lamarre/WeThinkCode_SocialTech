@@ -105,11 +105,11 @@ mobileRouter.route('/inboundpatient')
 		for (var i = 0; i < connectedHospitals.length; i++) {
 			if (connectedHospitals[i].code == hospitalCode) {
 				connectedHospitals[i].socket.emit('InboundPatient', JSON.stringify(hospitalResp));
-				break;
+				res.json({ status: true });
+				return ;
 			}
 		}
-
-		res.sendStatus(200);
+		res.json({ status: false, msg: 'Hospital not online.' });
 	})
 
 io.on('connect', function (socket) {

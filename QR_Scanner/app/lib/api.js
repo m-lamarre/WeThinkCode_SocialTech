@@ -47,8 +47,6 @@ class API {
         options.body = params ? JSON.stringify(params) : null;
 
         return (fetch(url, options).then((resp) => {
-            if (resp == 'Ok')
-                return { status: 'Ok'};     
             let json = resp.json();
             if (resp.ok) {
                 return (resp);

@@ -1,6 +1,7 @@
 import * as types from './types';
 import API from '../lib/api';
 import CONSTANTS from '../constants';
+import * as NotificationActions from './notification';
 
 export function getHospitals() {
     return (dispatch, getState) => {
@@ -24,7 +25,12 @@ export function sendInboundPatient(patient, hospital) {
         };
         API.post(CONSTANTS.API_ENDPOINTS.INBOUND_PATIENT, data, getState().loggedIn.token)
         .then(resp => {
-            console.log(resp);
+            var json = JSON.parse(resp._bodyText);
+            if (json.status == true) {
+                dispatch(NotificationActions.setNotificationState(true, 'Data sent successfully.'));
+            } else {
+                dispatch(NotificationActions.setNotificationState(true, json.msg));
+            }
         })
         .catch((err) => {
             console.log(err);

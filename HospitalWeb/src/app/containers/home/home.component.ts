@@ -48,12 +48,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.socket.on('InboundPatient', this.inboundPatient.bind(this));
   }
 
-  inboundPatient(msg) {
-    var msg = JSON.parse(msg);
-    this.incomingPatients.push(msg);
-    console.log(this.incomingPatients);
-  }
-
   ngOnInit() {
     
   }
@@ -65,6 +59,26 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   selectedPatientChanged(index) {
     this.selectedPatient = index;
+  }
+
+  inboundPatient(msg) {
+    var msg = JSON.parse(msg);
+    for (var i = 0; i < this.incomingPatients.length; i++) {
+      if (this.incomingPatients[i].patient.idNumber == msg.patient.idNumber) {
+        this.incomingPatients[i] = msg;
+        return ;
+      } else if (this.incomingPatients[i].patient.firstName == msg.patient.firstName
+        && this.incomingPatients[i].patient.lastName == msg.patient.lastname) {
+        this.incomingPatients[i] = msg;
+        return ;
+      }
+    }
+    this.incomingPatients.push(msg);
+  }
+
+  deletePatientFromList() {
+    this.incomingPatients.splice(this.selectedPatient, 1);
+    this.selectedPatient = -1;
   }
 }
 

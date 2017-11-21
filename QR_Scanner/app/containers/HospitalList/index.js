@@ -8,7 +8,8 @@ import {
 } from 'native-base';
 import {
     AsyncStorage
-} from 'react-native'
+} from 'react-native';
+import openMap from '../../lib/openMaps';
 
 var BUTTONS = [ 'Send Information', 'Route To', 'Cancel' ];
 
