@@ -1,5 +1,5 @@
 module.exports = {
-    USE_API: true,
+    USE_API: false,
     API_HOST: 'http://localhost:2022/',
     API_ENDPOINTS: {
         LOGIN: '/login',
