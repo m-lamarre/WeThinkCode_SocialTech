@@ -6,6 +6,7 @@ module.exports = {
         LOGOUT: '/logout',
         PATIENT: '/patient',
         HOSPITALS: '/hospitals',
-        INBOUND_PATIENT: '/inboundpatient'
+        INBOUND_PATIENT: '/inboundpatient',
+        USER: '/user'
     }
 }

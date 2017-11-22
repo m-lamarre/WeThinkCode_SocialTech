@@ -43,5 +43,11 @@ export const navigationState = createReducer({ previousRoute: '', route: 'Login'
             previousRoute: state.route,
             route: action.state.route
         });
+    },
+    [types.NAVIGATION_PROFILE](state, action) {
+        return ({
+            previousRoute: state.route,
+            route: action.state.route
+        });
     }
 });

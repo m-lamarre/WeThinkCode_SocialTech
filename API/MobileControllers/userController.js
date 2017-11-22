@@ -55,6 +55,7 @@ exports.newUser = function(req, res) {
  * oldUsername: String
  * hpcsaNumber: Number
  * username: String
+ * passwordChanged: Boolean
  * password: String
  * hpscaNumber: String
  * email: String
@@ -72,31 +73,10 @@ exports.updateUser = function (req, res) {
     User.findOne({ Username: req.body.oldUsername }).exec()
         .then(function (user) {
             if (user) {
-                bcrypt.genSalt(5, function (err, salt) {
-                    bcrypt.hash(req.body.password, salt, null, function (err, hash) {
-                        User.update({ _id : user._id },
-                            {
-                                Username: req.body.username,
-                                HPCSANumber: req.body.hpcsaNumber,
-                                Email: req.body.email,
-                                Password: hash
-                            }, function (err, num, raw) {
-                                if (err) {
-                                    resp.status = false;
-                                    resp.username = null;
-                                    resp.error = 'Failed to Update user.';
-                                    res.json(resp);
-                                    return ;
-                                } else {
-                                    resp.status = true;
-                                    resp.username = req.body.username;
-                                    resp.error = null;
-                                    res.json(resp);
-                                    return ;
-                                }
-                            });
-                    });
-                });
+                if (req.body.passwordChanged)
+                    updateUserWithPassword(req, res, user, resp);
+                else
+                    updateUserWithoutPassword(req, res, user, resp);
             } else {
                 resp.status = false;
                 resp.error = 'Could not find user with provided username';
@@ -109,6 +89,59 @@ exports.updateUser = function (req, res) {
             resp.error = err;
             res.json(resp);
             return ;
+        });
+}
+
+function updateUserWithPassword(req, res, user, resp) {
+    bcrypt.genSalt(5, function (err, salt) {
+        bcrypt.hash(req.body.password, salt, null, function (err, hash) {
+            User.update({ _id : user._id },
+                {
+                    Username: req.body.username,
+                    HPCSANumber: req.body.hpcsaNumber,
+                    Email: req.body.email,
+                    Password: hash
+                }, function (err, num, raw) {
+                    if (err) {
+                        resp.status = false;
+                        resp.username = null;
+                        resp.error = 'Failed to Update user.';
+                        res.json(resp);
+                        return ;
+                    } else {
+                        resp.status = true;
+                        resp.username = req.body.username;
+                        resp.user = user;
+                        resp.error = null;
+                        res.json(resp);
+                        return ;
+                    }
+                });
+        });
+    });
+}
+
+function updateUserWithoutPassword(req, res, user, resp) {
+    User.update({ _id : user._id },
+        {
+            Username: req.body.username,
+            HPCSANumber: req.body.hpcsaNumber,
+            Email: req.body.email
+        }, function (err, num, raw) {
+            if (err) {
+                resp.status = false;
+                resp.username = null;
+                resp.error = 'Failed to Update user.';
+                res.json(resp);
+                return ;
+            } else {
+                resp.status = true;
+                resp.username = req.body.username;
+                resp.user = user;
+                resp.error = null;
+                res.json(resp);
+                return ;
+            }
         });
 }
 

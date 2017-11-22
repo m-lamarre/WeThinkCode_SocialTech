@@ -54,6 +54,7 @@ exports.login = function(req, res) {
                 if (!err && isMatch) {
                     resp.status = true;
                     resp.username = user.Username;
+                    resp.user = user;
                     resp.token = genToken();
 
                     var nToken = new Token({

@@ -24,6 +24,12 @@ export function login(credentials) {
             var json = {
                 status: true,
                 username: '0000',
+                user: {
+                    Username: '0000',
+                    HPCSANumber: '000000',
+                    Email: 'test@test.co.za',
+                    Password: 'hahahahahahahahahahahahahahahahahahahahahahah debug'
+                },
                 error: null,
                 token: {
                     token: '1234567890'
@@ -50,7 +56,7 @@ export function logout(username) {
             .then((resp) => {
                 let json = JSON.parse(resp._bodyText);
                 if (json.status) {
-                    dispatch(setLoggedInState({ state: { status: false, username: null, error: null, token: { token: null } } }));
+                    dispatch(setLoggedInState({ state: { status: false, username: null, user: null, error: null, token: { token: null } } }));
                     dispatch(PatientActions.clearAllPatients());
                     dispatch(NavigationActions.navigateToScene(getState(), 'Login', types.NAVIGATION_SCAN_ID));
                 }
@@ -58,7 +64,7 @@ export function logout(username) {
                 console.log(ex);
             });
         } else {
-            dispatch(setLoggedInState({ state: { status: false, username: null, error: null, token: { token: null } } }));
+            dispatch(setLoggedInState({ state: { status: false, username: null, user: null, error: null, token: { token: null } } }));
             dispatch(PatientActions.clearAllPatients());
             dispatch(NavigationActions.navigateToScene(getState(), 'Login', types.NAVIGATION_SCAN_ID));
         }

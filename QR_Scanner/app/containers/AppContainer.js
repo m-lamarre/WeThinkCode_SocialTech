@@ -16,6 +16,7 @@ import ScanQR from './ScanQR';
 import PatientHistory from './PatientHistory';
 import PatientDetails from './PatientDetails';
 import HospitalList from './HospitalList';
+import Profile from './Profile';
 
 class AppContianer extends Component<{}> {
     constructor(props) {
@@ -47,6 +48,8 @@ class AppContianer extends Component<{}> {
             Scene = PatientHistory;
         } else if (this.props.navigationState.route == 'HospitalList') {
             Scene = HospitalList;
+        } else if (this.props.navigationState.route == 'Profile') {
+            Scene = Profile;
         }
         return (
             <Scene {...this.props}/>
