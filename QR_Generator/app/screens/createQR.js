@@ -36,65 +36,53 @@ export default class CreateQR extends Component {
 		this.state = {
 			patient: props.patient
         }
+        console.log(this.state.patient);
     }
 
     getInitial(initial) {
-        if (initial == "Mr.")
-            return "0";
-        else if (initial == "Mrs.")
-            return "1";
-        else if (initial == "Ms.")
-            return "2";
-        else
-            return "0";
+        switch (initial) {
+            case ("Mr."): return ("0");
+            case ("Mrs."): return ("1");
+            case ("Ms."): return ("2");
+            default: return ("0");
+        }
     }
 
     getGender(gender) {
-        if (gender === "Male")
-            return "M"
-        else if (gender === "Female")
-            return "F"
-        else
-            return "M"
+        switch (gender) {
+            case ("Male"): return ("M");
+            case ("Female"): return ("F");
+            default: return ("M");
+        }
     }
 
     getRace(race) {
-        console.log("TOKEN: " + race);
-        if (race === "White" || race == null)
-            return "0";
-        else if (race === "Black")
-            return "1";
-        else if (race === "Indian")
-            return "2";
-        else if (race === "Coloured")
-            return "3";
-        else
-            return "9";
+        switch (race) {
+            case ("White"): return ("0");
+            case ("Black"): return ("1");
+            case ("Indian"): return ("2");
+            case ("Coloured"): return ("3");
+            default: return ("4");
+            case ("Other"): return ("4");
+        }
     }
 
     getBloodType(bloodType) {
-        if (bloodType === "A+")
-            return "1";
-        else if (bloodType === "A-")
-            return "2";
-        else if (bloodType === "B+")
-            return "3";
-        else if (bloodType === "B-")
-            return "4";
-        else if (bloodType === "AB+")
-            return "5";
-        else if (bloodType === "AB-")
-            return "6";
-        else if (bloodType === "O+")
-            return "7";
-        else if (bloodType === "O-")
-            return "8";
-        else
-            return "0";
+        switch (bloodType) {
+            case ("Not Sure"): return ("0");
+            case ("A+"): return ("1");
+            case ("A-"): return ("2");
+            case ("B+"): return ("3");
+            case ("B-"): return ("4");
+            case ("AB+"): return ("5");
+            case ("AB-"): return ("6");
+            case ("O+"): return ("7");
+            case ("O-"): return ("8");
+            default: return (0);
+        }
     }
 
     getDate(date) {
-        console.log("TOKEN: " + date);
         var strDate = date.getFullYear() + "-";
         var month = date.getMonth() + 1;
         if (month < 10)
@@ -108,28 +96,33 @@ export default class CreateQR extends Component {
         return (strDate);
     }
     
+    /**
+     * Erick|Doe|0|00000000000000|1996-08-26|M|0|1|John|Doe|0000000000|BestMed|ATC0001|None|None|None
+     */
+
     buildToken() {
+        var split = "|";
         var token = "";
 
         token += this.state.patient.firstName;
-        token += "|" + this.state.patient.lastName;
-        token += "|" + this.getInitial(this.state.patient.initial);
-        token += "|" + this.state.patient.idNumber;
-        token += "|" + this.getDate(new Date(this.state.patient.dateOfBirth));
-        token += "|" + this.getGender(this.state.patient.gender);
-        token += "|" + this.getRace(this.state.patient.race);
-        token += "|" + this.getBloodType(this.state.patient.bloodType);
+        token += split + this.state.patient.lastName;
+        token += split + this.getInitial(this.state.patient.initial);
+        token += split + this.state.patient.idNumber;
+        token += split + this.getDate(new Date(this.state.patient.dateOfBirth));
+        token += split + this.getGender(this.state.patient.gender);
+        token += split + this.getRace(this.state.patient.race);
+        token += split + this.getBloodType(this.state.patient.bloodType);
 
-        token += "|" + this.state.patient.nextOfKinFirstName;
-        token += "|" + this.state.patient.nextOfKinLastName;
-        token += "|" + this.state.patient.nextOfKinCellNumber;
+        token += split + this.state.patient.nextOfKinFirstName;
+        token += split + this.state.patient.nextOfKinLastName;
+        token += split + this.state.patient.nextOfKinCellNumber;
 
-        token += "|" + this.state.patient.medicalAid;
-        token += "|" + this.state.patient.medicalAidNumber;
+        token += split + this.state.patient.medicalAid;
+        token += split + this.state.patient.medicalAidNumber;
 
-        token += "|" + this.state.patient.allergies;
-        token += "|" + this.state.patient.history;
-        token += "|" + this.state.patient.chronicMedication;
+        token += split + this.state.patient.allergies;
+        token += split + this.state.patient.history;
+        token += split + this.state.patient.chronicMedication;
 
         console.log("TOKEN: " + token);
         return (token);

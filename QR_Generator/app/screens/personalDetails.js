@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { 
-	StyleSheet, View, Alert, Platform
-} from 'react-native';
+import { StyleSheet, View, Alert, Platform } from 'react-native';
 import { 
 	Container, Header, Content, Footer,
 	Left, Body, Title, Button, Label,
@@ -10,10 +8,9 @@ import {
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import DatePicker from 'react-native-datepicker'
-
 import PatientInformation from '../models/PatientInformation';
-
 import DropDown from '../components/DropDown/dropdown'
+import CONSTS from '../constants';
 
 const styles = StyleSheet.create({
 	btn_container: {
@@ -45,7 +42,11 @@ export default class PersonalDetails extends Component {
 			patient: new PatientInformation(),
 			date: '',
 			month: '',
-			year: ''			
+			year: '',
+			
+			validFirstName: true,
+			validLastName: true,
+			validIDNumber: true
 		}
 		this.state.patient.dateOfBirth = new Date();
 		
@@ -68,6 +69,33 @@ export default class PersonalDetails extends Component {
 		return (true);
 	}
 
+	validateTextInput() {
+		//First Name
+		if (!this.state.validFirstName) {
+			Alert.alert('First Name: Invalid "|" Content.');
+			return (false);
+		}
+		//Last Name
+		if (!this.state.validLastName) {
+			Alert.alert('Last Name: Invalid "|" Content.');
+			return (false);
+		}
+	
+		//ID Number
+		if (this.state.patient.idNumber != null && this.state.patient.idNumber.length > 0) {
+			if (isNaN(this.state.patient.idNumber)) {
+				Alert.alert('ID Number: Numbers only.');
+				return (false);
+			}
+			if (!this.state.validIDNumber) {
+				Alert.alert('ID Number: Invalid "|" Content.');
+				return (false);
+			}
+		}
+
+		return (true);
+	}
+
 	validate() {
 		var year = parseInt(this.state.year);
 		var month = parseInt(this.state.month);
@@ -77,7 +105,6 @@ export default class PersonalDetails extends Component {
 			Alert.alert('Invalid Date of Birth.');
 			return (false);
 		}
-		console.log(year);
 
 		var maxYear = new Date().getFullYear();
 		if (year < (maxYear - 120) || year > maxYear) {
@@ -94,7 +121,8 @@ export default class PersonalDetails extends Component {
 			return (false);
 		}
 		this.state.patient.dateOfBirth = year + '-' + (month)  + '-' + date;
-		return (true);
+
+		return (this.validateTextInput());
 	}
 
 	render() {
@@ -113,24 +141,36 @@ export default class PersonalDetails extends Component {
 				</Header>
 				<Content>
 					<Form>
-						<Item stackedLabel>
+						<Item stackedLabel error={!this.state.validFirstName}>
 							<Label>First Name</Label>
 							<Input maxLength={125}
-								onChangeText={(value) => { 
+								onChangeText={(value) => {
+									if (value.indexOf(CONSTS.SPLITTER) > -1)
+										this.setState({ validFirstName: false });
+									else
+										this.setState({ validFirstName: true });
 									this.state.patient.firstName = value; 
-								}}/>
+								}} />
 						</Item>
-						<Item stackedLabel>
+						<Item stackedLabel error={!this.state.validLastName}>
 							<Label>Last Name</Label>
 							<Input maxLength={125}
 								onChangeText={(value) => {
+									if (value.indexOf(CONSTS.SPLITTER) > -1)
+										this.setState({ validLastName: false });
+									else
+										this.setState({ validLastName: true });
 									this.state.patient.lastName = value;
 								}}/>
 						</Item>
-						<Item stackedLabel>
+						<Item stackedLabel error={!this.state.validIDNumber}>
 							<Label>ID Number</Label>
 							<Input maxLength={13} keyboardType='numeric'
 								onChangeText={(value) => {
+									if (value.indexOf(CONSTS.SPLITTER) > -1)
+										this.setState({ validIDNumber: false });
+									else
+										this.setState({ validIDNumber: true });
 									this.state.patient.idNumber = value;
 								}}/>
 						</Item>
@@ -186,21 +226,18 @@ export default class PersonalDetails extends Component {
 							onSelectedChanged={(value) => { this.state.patient.initial = value; }}/>
 						<DropDown title="Select Gender" list={genders} 
 							onSelectedChanged={(value) => { this.state.patient.gender = value; }}/>
-
 						<DropDown title="Select Race" list={races}
-							onSelectedChanged={(value) => { 
-								this.state.patient.race = value; 
-							}}/>
-						<DropDown title="Select Bloodtype" 
-							list={bloodtypes} 
+							onSelectedChanged={(value) => { this.state.patient.race = value; }}/>
+						<DropDown title="Select Bloodtype" list={bloodtypes} 
 							onSelectedChanged={(value) => { this.state.patient.bloodType = value; }}/>
 					</Form>
 			  	</Content>
 				<Footer>
 					<FooterTab>
 						<Button onPress={() => { 
-							if (this.validate())
+							if (this.validate()) {
 								Actions.NextOfKin(this.state); 
+							}
 						}}>
 							<Text>Next</Text>
 						</Button>

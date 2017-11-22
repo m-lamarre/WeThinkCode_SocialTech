@@ -18,5 +18,6 @@ module.exports = {
       Some disclaimer of sorts.Some disclaimer of sorts.Some disclaimer of sorts.Some disclaimer of sorts.
       Some disclaimer of sorts.Some disclaimer of sorts.Some disclaimer of sorts.Some disclaimer of sorts.
       Some disclaimer of sorts.Some disclaimer of sorts.Some disclaimer of sorts.Some disclaimer of sorts.`
-  }
+  },
+  SPLITTER: '|'
 };
