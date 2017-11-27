@@ -1,6 +1,8 @@
 var User                = require('../models/UserModel');
 var loginResponseModel  = require('../models/LoginResponseModel.js');
 var bcrypt              = require('bcrypt-nodejs');
+var nodemailer          = require('nodemailer');
+var smtpTransport       = require('nodemailer-smtp-transport');
 
 /**REQUIRED BODY FOR REQUEST:
  * hpcsaNumber: Number
@@ -221,4 +223,107 @@ exports.getUser = function (req, res) {
             resp.error = 'Could not find user.';
             res.json(resp);
         })
+}
+
+/**REQUIRED BODY FOR REQUEST:
+ * hcpsaNumber: String
+ * email: String
+ * 
+ * FORMAT: json or form data
+ * 
+ * RETURNS: {
+ *      status: Boolean,
+ *      err: any
+ * }
+ */
+exports.resetPassword = function (req, res) {
+    var resp = {
+        status: false,
+        err: null,
+    };
+    console.log(req.body.email);
+    User.findOne({ HPCSANumber: req.body.hcpsaNumber, Email: req.body.email }).exec()
+    .then((user) => {
+        if (user) {
+            var key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz#@%&";
+            var rndPwd = "";
+            
+            for (var i = 0; i < 8; i++) {
+                rndPwd += key.charAt(Math.random() * 66);
+            }
+
+            var transporter = nodemailer.createTransport(smtpTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'exallowen@gmail.com',
+                    pass: 'OweP@ss_96'
+                }
+            }));
+            var htmlText = 
+                `<html>
+                    <head></head>
+                    <body>
+                        <H2>Hello ${user.Username}</H2>
+                        <p>You have requested a password reset. Please see below your new password. Please reset this at your earliest convenience.</p>
+                        <br />
+                        New Password: <b>${rndPwd}</b>
+                        <br/>
+                        <p>Kind Regards, <br/>ER-QR Staff</p>
+                    </body>
+                </html>`;
+            var mailOptions = {
+                from: 'exallowen@gmail.com',
+                to: user.Email,
+                subject: 'ER-QR Password Reset',
+                html: htmlText
+            };
+            transporter.sendMail(mailOptions, (err, info) => {
+                if (err) {
+                    console.log(err);
+                    resp.status = false;
+                    res.json(resp);
+                    return ;
+                } else { 
+                    bcrypt.genSalt(5, function (err, salt) {
+                        bcrypt.hash(rndPwd, salt, null, function (err, hash) {
+                            User.update({_id: user._id}, { Password: hash }, function (err, num, raw) {
+                                if (!err) {
+                                    resp.status = true;
+                                    res.json(resp);
+                                    return ;
+                                }
+                                else {
+                                    resp.status = false;
+                                    resp.err = "Failed to reset password.";
+        
+                                    var errMailOptions = {
+                                        from: 'exallowen@gmail.com',
+                                        to: user.email,
+                                        subject: 'ER-QR Password Reset Failed.',
+                                        html: `
+                                            <body>
+                                                <head></head>
+                                                <body>
+                                                    <h2>Hello ${user.username}</h2>
+                                                    <p>We regret to inform you that the password reset has failed. Sorry for the inconvenience.<p>
+                                                    <p>Kind Regards, <br/> ER-QR Staff</p>
+                                                </body>
+                                            </body>
+                                        `
+                                    };
+                                    transporter.sendMail(errMailOptions);
+        
+                                    res.json(resp);
+                                    return ;
+                                }
+                            });
+                        });
+                    });
+                }
+            });
+        } else {
+            resp.err = "Could not find user.";
+            res.json(resp);
+        }
+    });
 }

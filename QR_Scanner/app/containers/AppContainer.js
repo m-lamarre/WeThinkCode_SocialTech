@@ -17,6 +17,7 @@ import PatientHistory from './PatientHistory';
 import PatientDetails from './PatientDetails';
 import HospitalList from './HospitalList';
 import Profile from './Profile';
+import ForgotPassword from './ForgotPassword';
 
 class AppContianer extends Component<{}> {
     constructor(props) {
@@ -50,6 +51,8 @@ class AppContianer extends Component<{}> {
             Scene = HospitalList;
         } else if (this.props.navigationState.route == 'Profile') {
             Scene = Profile;
+        } else if (this.props.navigationState.route == 'ForgotPassword') {
+            Scene = ForgotPassword;
         }
         return (
             <Scene {...this.props}/>

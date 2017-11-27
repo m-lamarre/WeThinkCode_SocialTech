@@ -83,6 +83,8 @@ mobileRouter.route('/user')
 	.delete(apiAuthConfig.isAuthenticated, mUserContoller.deleteUser);
 mobileRouter.route('/hospitals')
 	.post(apiAuthConfig.isAuthenticated, mHospitalController.getHospitals);
+mobileRouter.route('/resetpassword')
+	.post(mUserContoller.resetPassword);
 
 hospitalRouter.route('/login')
 	.post(hLoginController.login);

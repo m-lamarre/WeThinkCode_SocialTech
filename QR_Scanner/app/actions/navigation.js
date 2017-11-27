@@ -18,6 +18,8 @@ export function navigate(action) {
             return dispatch(navigateToScene(getState(), 'Profile', types.NAVIGATION_PROFILE));
         else if (action == types.NAVIGATION_HOSPITAL_LIST)
             return dispatch(navigateToScene(getState(), 'HospitalList', types.NAVIGATION_HOSPITAL_LIST));
+        else if (action == types.NAVIGATION_FORGOT_PASSWORD)
+            return dispatch(navigateToScene(getState(), 'ForgotPassword', types.NAVIGATION_FORGOT_PASSWORD));
 
         dispatch(navigateToScene(getState(), 'Login', types.NAVIGATION_LOGIN));
     }

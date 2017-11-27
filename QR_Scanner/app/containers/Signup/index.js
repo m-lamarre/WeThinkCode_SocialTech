@@ -56,25 +56,25 @@ export default class Signup extends Component<{}> {
                 </Header>
                 <Content>
                     <Form>
-                        <Item floatingLabel>
+                        <Item stackedLabel>
                             <Label>HPCSA Number:</Label>
                             <Input onChangeText={(value) => {
                                 this.setState({ hpcsaNumber: value });
                             }}/>
                         </Item>
-                        <Item floatingLabel>
+                        <Item stackedLabel>
                             <Label>E-mail:</Label>
                             <Input onChangeText={(value) => {
                                 this.setState({ email: value });
                             }}/>
                         </Item>
-                        <Item floatingLabel>
+                        <Item stackedLabel>
                             <Label>Username:</Label>
                             <Input onChangeText={(value) => {
                                 this.setState({ username: value });
                             }}/>
                         </Item>
-                        <Item floatingLabel>
+                        <Item stackedLabel>
                             <Label>Password:</Label>
                             <Input secureTextEntry={true}
                                 onChangeText={(value) => {
@@ -86,7 +86,7 @@ export default class Signup extends Component<{}> {
                                      this.setState({password: value, validPwd: same });
                                 }}/>
                         </Item>
-                        <Item floatingLabel error={!this.state.validPwd} success={this.state.validPwd}>
+                        <Item stackedLabel error={!this.state.validPwd} success={this.state.validPwd}>
                             <Label>Confirm Password:</Label>
                             <Input secureTextEntry={true}
                                 onChangeText={(value) => {

@@ -108,6 +108,11 @@ export default class Login extends Component<{}> {
                             </Button> 
                         </View>
                     </View>
+                    <Button primary full
+                        style={styles.btn}
+                        onPress={() => this.props.navigate(types.NAVIGATION_FORGOT_PASSWORD) }>
+                        <Text>Forgot Password</Text>
+                    </Button>
                 </Content>
             </Container>
         );

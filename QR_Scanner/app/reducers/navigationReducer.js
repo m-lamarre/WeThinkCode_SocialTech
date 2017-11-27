@@ -49,5 +49,11 @@ export const navigationState = createReducer({ previousRoute: '', route: 'Login'
             previousRoute: state.route,
             route: action.state.route
         });
+    },
+    [types.NAVIGATION_FORGOT_PASSWORD](state, action) {
+        return ({
+            previousRoute: state.route,
+            route: action.state.route
+        });
     }
 });
