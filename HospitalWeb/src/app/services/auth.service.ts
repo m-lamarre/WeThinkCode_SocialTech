@@ -19,7 +19,7 @@ export class AuthService {
     private http: Http,
     private consts: ConstsService
   ) {
-    this.loggedIn.next(!!localStorage.getItem('auth_token'));
+    this.loggedIn.next(!!sessionStorage.getItem('auth_token'));
   }
 
   login(username, password)  {
@@ -36,8 +36,10 @@ export class AuthService {
       .map(data => {
         console.log(data);
         if (data.status){
-          localStorage.setItem('auth_token', data.token.token);
-          localStorage.setItem('code', data.username);
+          sessionStorage.setItem('auth_token', data.token.token);
+          sessionStorage.setItem('code', data.username);
+          /*localStorage.setItem('auth_token', data.token.token);
+          localStorage.setItem('code', data.username);*/
           this.loggedIn.next(true);
         } else {
           return ({ status: false, msg: data.error });
@@ -47,7 +49,7 @@ export class AuthService {
   }
 
   logout() {
-    if  (!!localStorage.getItem('auth_token') == false)
+    if  (!!sessionStorage.getItem('auth_token') == false)
       return ;
 
     var headers = new Headers();
@@ -62,7 +64,8 @@ export class AuthService {
       .subscribe(res => console.log(res),
                 error => console.log(error));
 
-    localStorage.clear();
+    //localStorage.clear();
+    sessionStorage.clear();
     this.loggedIn.next(false);
     this.router.navigate(['/login']);
   }

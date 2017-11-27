@@ -93,7 +93,7 @@ var connectedHospitals = [
 ];
 
 mobileRouter.route('/inboundpatient')
-	.post((req, res) => {
+	.post(apiAuthConfig.isAuthenticated, (req, res) => {
 		console.log('InboundPatient: Inbound Patient');
 		var hospitalCode = req.body.hospitalCode || '';
 		var hospitalResp = new hPatientInbound();
