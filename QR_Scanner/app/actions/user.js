@@ -61,3 +61,23 @@ export function updateUser(updatedUser, oldUser) {
         });
     };
 }
+
+export function forgotPassword(body) {
+    return (dispatch, getState) => {
+        API.post(CONSTANTS.API_ENDPOINTS.FORGOT_PWD, body, null)
+        .then((resp) => {
+            let json = JSON.parse(resp._bodyText);
+            console.log(json);
+            if (json.status == true) {
+                dispatch(NotificationActions.setNotificationState(true, 'Reset Password Successful. Check your e-mails for new password.'));
+                dispatch(NavigationActions.navigateToScene(getState(), 'Login', types.NAVIGATION_LOGIN));
+            } else {
+                dispatch(NotificationActions.setNotificationState(true, 'Invalid HPCSA Number or E-mail.'));
+            }
+        })
+        .catch((err) => {
+            console.error('An error occured reseting the password', err);
+            dispatch(NotificationActions.setNotificationState(true, 'Failed to reset Password.'));
+        });
+    };
+}

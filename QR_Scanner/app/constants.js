@@ -7,6 +7,7 @@ module.exports = {
         PATIENT: '/patient',
         HOSPITALS: '/hospitals',
         INBOUND_PATIENT: '/inboundpatient',
-        USER: '/user'
+        USER: '/user',
+        FORGOT_PWD: '/resetpassword'
     }
 }

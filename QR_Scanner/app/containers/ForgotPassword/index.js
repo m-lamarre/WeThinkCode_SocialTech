@@ -20,7 +20,11 @@ export default class ForgotPassword extends Component<{}> {
     }
 
     sendForgotPassword() {
-
+        var body = {
+            hcpsaNumber: this.state.hpcsaNumber,
+            email: this.state.email
+        }
+        this.props.forgotPassword(body);
     }
 
     render() {
@@ -48,7 +52,8 @@ export default class ForgotPassword extends Component<{}> {
                         </Item>
                         <Item stackedLabel>
                             <Label>E-mail:</Label>
-                            <Input onChangeText={(value) => {
+                            <Input autoCapitalize='none'
+                            onChangeText={(value) => {
                                 this.setState({ email: value });
                             }}/>
                         </Item>

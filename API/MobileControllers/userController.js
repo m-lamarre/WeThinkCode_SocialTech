@@ -241,7 +241,7 @@ exports.resetPassword = function (req, res) {
         status: false,
         err: null,
     };
-    console.log(req.body.email);
+    console.log('Reset Password Request');
     User.findOne({ HPCSANumber: req.body.hcpsaNumber, Email: req.body.email }).exec()
     .then((user) => {
         if (user) {
