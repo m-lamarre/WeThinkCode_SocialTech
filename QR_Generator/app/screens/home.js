@@ -3,7 +3,8 @@ import {
 	StyleSheet, 
 	View, 
 	Image,
-	AsyncStorage 
+	AsyncStorage,
+	Platform
 } from 'react-native';
 import { 
 	Container, 
@@ -58,6 +59,18 @@ export default class Home extends Component {
 		}
 	}
 
+	renderLockScreen() {
+		if (Platform.OS == 'android') {
+			return (
+				<Button full style={styles.btn} onPress={() => {
+					Actions.LockScreen();
+				}}>
+					<Text>Lockscreen Settings</Text>
+				</Button>
+			);
+		}
+	}
+
 	render() {
 		return (
 			<Container>
@@ -77,6 +90,7 @@ export default class Home extends Component {
 							onPress={() => { Actions.Disclaimer(); }}>
 							<Text>Create QR Code</Text>
 						</Button>
+						{ this.renderLockScreen() }
 					</View>
 				</Content>
 			</Container>

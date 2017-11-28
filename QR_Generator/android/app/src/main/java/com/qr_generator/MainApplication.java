@@ -29,7 +29,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNDeviceInfo(),
             new AesCryptoPackage(),
             new VectorIconsPackage(),
-          new QRCodePackage()
+            new QRCodePackage(),
+            new LockScreenPackage()
       );
     }
   };

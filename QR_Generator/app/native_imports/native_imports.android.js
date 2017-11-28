@@ -3,3 +3,4 @@
 import { NativeModules } from 'react-native';
 
 module.exports = NativeModules.QRCodeAndroid;
+module.exports = NativeModules.LockScreenAndroid;

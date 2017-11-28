@@ -16,6 +16,7 @@ import PersonalDetails from './screens/personalDetails';
 import NextOfKin from './screens/nextOfKin';
 import MedicalDetails from './screens/medicalDetails';
 import CreateQR from './screens/createQR';
+import LockScreen from './screens/lockscreen';
 
 const QR_Generator = (props) => {
 	return (
@@ -30,6 +31,7 @@ const QR_Generator = (props) => {
 						<Scene key="NextOfKin" component={NextOfKin} />
 						<Scene key="MedicalDetails" component={MedicalDetails} />
 						<Scene key="CreateQR" component={CreateQR} />
+						<Scene key="LockScreen" component={LockScreen}/>
 					</Stack>
 				</Modal>
 			</Overlay>
