@@ -6,7 +6,7 @@ import { Container, Header, Content, List, ListItem,
 import { Actions } from 'react-native-router-flux';
 import DeviceInfo from 'react-native-device-info';
 import CONSTANTS from '../constants';
-import * as ni from '../native_imports/native_imports';
+import * as ni from '../native_imports/lockscreen';
 
 export default class Disclaimer extends Component {
 	constructor() {

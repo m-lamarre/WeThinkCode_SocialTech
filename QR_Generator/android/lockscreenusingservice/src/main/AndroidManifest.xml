@@ -20,9 +20,11 @@
         <activity
             android:name=".PermissionActivity" >
         </activity>
-        <service android:name=".service.LockscreenService" >
+        <service android:name=".service.LockscreenService"
+            android:isolatedProcess="true">
         </service>
-        <service android:name=".service.LockscreenViewService" >
+        <service android:name=".service.LockscreenViewService"
+            android:isolatedProcess="true">
         </service>
     </application>
 

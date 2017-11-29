@@ -1,5 +1,7 @@
 package com.qr_generator;
 
+import android.content.Context;
+
 import com.facebook.common.util.ExceptionWithNoStacktrace;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
@@ -21,13 +23,13 @@ public class LockScreenModule extends ReactContextBaseJavaModule {
     public String getName() { return ("LockScreenAndroid"); }
 
     private boolean lockScreenEnabled = false;
-    private ReactApplicationContext rAppContext;
+    private Context rAppContext;
 
     public LockScreenModule(ReactApplicationContext reactContext) {
         super(reactContext);
-        rAppContext = reactContext;
+        rAppContext = reactContext.getApplicationContext();
 
-        SharedPreferencesUtil.init(reactContext);
+        SharedPreferencesUtil.init(rAppContext);
 
         lockScreenEnabled = SharedPreferencesUtil.get(Lockscreen.ISLOCK);
     }
@@ -49,10 +51,11 @@ public class LockScreenModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void setLockScreenEnabled(Boolean value, Promise promise) {
         try {
-            SharedPreferencesUtil.setBoolean(Lockscreen.ISLOCK, value);
             if (value) {
+                SharedPreferencesUtil.setBoolean(Lockscreen.ISLOCK, true);
                 Lockscreen.getInstance(rAppContext).startLockscreenService();
             } else {
+                SharedPreferencesUtil.setBoolean(Lockscreen.ISLOCK, false);
                 Lockscreen.getInstance(rAppContext).stopLockscreenService();
             }
 
