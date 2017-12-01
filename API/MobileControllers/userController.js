@@ -256,7 +256,7 @@ exports.resetPassword = function (req, res) {
                 service: 'gmail',
                 auth: {
                     user: 'exallowen@gmail.com',
-                    pass: 'OweP@ss_96'
+                    pass: ''
                 }
             }));
             var htmlText = 

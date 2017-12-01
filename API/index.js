@@ -19,6 +19,7 @@ var mPatientController	= require('./MobileControllers/patientController.js');
 var mLoginController	= require('./MobileControllers/loginController.js');
 var mUserContoller		= require('./MobileControllers/userController.js');
 var mHospitalController	= require('./MobileControllers/hospitalController.js');
+var mQrController		= require('./MobileControllers/qrMailController.js');
 
 var hLoginController	= require('./HospitalControllers/hospitalLoginController.js');
 var hPatientInbound		= require('./models/HospitalResponeModel.js');
@@ -71,10 +72,8 @@ mobileRouter.route('/login')
 	.post(mLoginController.login);
 mobileRouter.route('/logout')
 	.post(apiAuthConfig.isAuthenticated, mLoginController.logout);
-
 mobileRouter.route('/patient')
 	.post(apiAuthConfig.isAuthenticated, mPatientController.getPatientById);
-
 mobileRouter.route('/user/:username')
 	.get(apiAuthConfig.isAuthenticated, mUserContoller.getUser);
 mobileRouter.route('/user')
@@ -85,6 +84,8 @@ mobileRouter.route('/hospitals')
 	.post(apiAuthConfig.isAuthenticated, mHospitalController.getHospitals);
 mobileRouter.route('/resetpassword')
 	.post(mUserContoller.resetPassword);
+mobileRouter.route('/emailqr')
+	.post(mQrController.emailQRCode);
 
 hospitalRouter.route('/login')
 	.post(hLoginController.login);

@@ -19,5 +19,8 @@ module.exports = {
       Some disclaimer of sorts.Some disclaimer of sorts.Some disclaimer of sorts.Some disclaimer of sorts.
       Some disclaimer of sorts.Some disclaimer of sorts.Some disclaimer of sorts.Some disclaimer of sorts.`
   },
-  SPLITTER: '|'
+  SPLITTER: '|',
+  API: {
+      EMAIL: 'http://localhost:2022/mobile/emailqr'
+  }
 };

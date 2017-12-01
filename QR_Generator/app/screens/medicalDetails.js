@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { 
-	StyleSheet, View, Alert
+	StyleSheet, View, Alert, AsyncStorage
 } from 'react-native';
 import { 
 	Container, Header, Content, Footer,
@@ -67,6 +67,15 @@ export default class MedicalDetails extends Component {
 		}
 
 		return (true);
+	}
+
+	async setSentEmails() {
+        try {
+			console.log('RESET TO ZERO');
+            await AsyncStorage.setItem('@Settings:EmailsSent', '0');
+        } catch (error) {
+            console.log('Failed to save QR Image.');
+        }  
 	}
 
 	render() {
@@ -157,8 +166,10 @@ export default class MedicalDetails extends Component {
 							<Text>Back</Text>
 						</Button>
 						<Button onPress={() => {
-								if (this.validate())
+								if (this.validate()) {
 									Actions.CreateQR(this.state); 
+									this.setSentEmails();
+								}
 							}}>
 							<Text>Finish</Text>
 						</Button>

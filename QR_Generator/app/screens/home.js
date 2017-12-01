@@ -58,6 +58,17 @@ export default class Home extends Component {
 		}
 	}
 
+	renderEmailButton() {
+		if (this.state.qrCode) {
+			return (
+				<Button full style={styles.btn}
+					onPress={() => { Actions.EmailQR(); }}>
+					<Text>E-mail QR Code</Text>
+				</Button>
+			);
+		}
+	}
+
 	render() {
 		return (
 			<Container>
@@ -77,6 +88,7 @@ export default class Home extends Component {
 							onPress={() => { Actions.Disclaimer(); }}>
 							<Text>Create QR Code</Text>
 						</Button>
+						{ this.renderEmailButton() }
 					</View>
 				</Content>
 			</Container>
