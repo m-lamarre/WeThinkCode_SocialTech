@@ -74,8 +74,8 @@ export default class HospitalList extends Component<{}> {
                                     hosp
                                 );
                                 openMap({
-                                    latitude: this.props.hospitals.list[buttonIndex].Latitude,
-                                    longitude: this.props.hospitals.list[buttonIndex].Longitude,
+                                    latitude: this.props.hospitals.list[0].Latitude,
+                                    longitude: this.props.hospitals.list[0].Longitude,
                                     zoomLevel: 20
                                 });
                             }
@@ -86,8 +86,6 @@ export default class HospitalList extends Component<{}> {
                             <Text note>{hosp.StreetAddress}, {hosp.City}</Text>
                         </Body>
                         <Right>
-                            <Text>55km</Text>
-                            <Text note>35min</Text>
                         </Right>
                     </ListItem>
                 }>

@@ -71,7 +71,10 @@ export default class PatientDetails extends Component<{}> {
                     </Item>
                     <Item stackedLabel last>
                         <Label>Blood Type:</Label>
-                        <Input value={ this.props.patients.patientHistory[this.props.patients.selectedPatient].bloodType }/>
+                        <Input value={ this.props.patients.patientHistory[this.props.patients.selectedPatient].bloodType }
+                            onChangeText={(value) => {
+                                this.props.patients.patientHistory[this.props.patients.selectedPatient].bloodType = value;
+                            }}/>
                     </Item>
                     <Item stackedLabel last>
                         <Label>Next of Kin:</Label>
@@ -95,24 +98,30 @@ export default class PatientDetails extends Component<{}> {
                     </Item>
                     <Item stackedLabel last>
                         <Label>Allergies:</Label>
-                        <Input style={{
-                            marginTop: 5
-                        }}  multiline={true}
-                        value={ this.props.patients.patientHistory[this.props.patients.selectedPatient].allergies}/>
+                        <Input style={{ marginTop: 5 }}  multiline={true}
+                            value={ this.props.patients.patientHistory[this.props.patients.selectedPatient].allergies}
+                            onChangeText={(value) => {
+                                this.props.patients.patientHistory[this.props.patients.selectedPatient].allergies = value;
+                            }}
+                        />
                     </Item>
                     <Item stackedLabel last>
                         <Label>Medical History:</Label>
-                        <Input style={{
-                            marginTop: 5
-                        }}  multiline={true}
-                        value={ this.props.patients.patientHistory[this.props.patients.selectedPatient].history }/>
+                        <Input style={{ marginTop: 5 }}  multiline={true}
+                            value={ this.props.patients.patientHistory[this.props.patients.selectedPatient].history }
+                            onChangeText={(value) => {
+                                this.props.patients.patientHistory[this.props.patients.selectedPatient].history = value;
+                            }}
+                        />
                     </Item>
                     <Item stackedLabel last>
                         <Label>Chronic Medication:</Label>
-                        <Input style={{
-                            marginTop: 5
-                        }}  multiline={true}
-                        value={ this.props.patients.patientHistory[this.props.patients.selectedPatient].chronicMedication }/>
+                        <Input style={{ marginTop: 5 }}  multiline={true}
+                            value={ this.props.patients.patientHistory[this.props.patients.selectedPatient].chronicMedication }
+                            onChangeText={(value) => {
+                                this.props.patients.patientHistory[this.props.patients.selectedPatient].chronicMedication = value;
+                            }}
+                        />
                     </Item>
                 </Form>
                 </Content>
