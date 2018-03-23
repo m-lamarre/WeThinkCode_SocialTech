@@ -33,4 +33,10 @@
 * `npm install`
 * `react-native run-ios`
 
-**Note: to run on android, you need to have a running emulator. Then call `react-native run-android`**
+**Note: to run on android, you need to have a running emulator. Then call** `react-native run-android`
+
+## The Team
+
+* Owen Exall - who was incharge of building the QR Scanner & the QR Code Generating apps 
+* Robert Jones - who was our business liaison and in charge of the business model
+* Miriam Lamarre - who was in charge of design, mock-ups, front end and the presentation
