@@ -28,7 +28,7 @@
 
 ### React-Native Apps
 
-#### This should be the same for both the QR_Generator & QR_Scanner
+**This should be the same for both the QR_Generator & QR_Scanner**
 
 * `npm install`
 * `react-native run-ios`
